@@ -1,0 +1,46 @@
+:root{
+  --app-header-height: 60px;
+  --app-footer-height: 40px;
+  --app-main-padding: 10px;
+  --app-page-height: calc(100vh - var(--app-header-height) - var(--app-footer-height) - var(--app-main-padding) * 2) ;
+  --app-aside-width: 100px;
+
+  // colors
+  --color-primary: rgb(90 130 221);
+
+  
+}
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f5f5;
+}
+
+#app {
+  color: rgb(48 49 51);
+  width: 100%;
+}
+
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page{
+  padding: 10px;
+  background: #fff;
+  min-height: var(--app-page-height);
+  box-sizing: border-box;
+}
+
+table{
+  border-collapse: collapse;
+
+  td,th{
+    border: 1px solid #cfcfcf;
+    padding: 6px 10px ;
+  }
+}
