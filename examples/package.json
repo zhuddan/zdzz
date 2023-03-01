@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@zdzz/hooks": "workspace:*",
     "@zdzz/shared": "workspace:*"
   }
 }

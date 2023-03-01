@@ -19,10 +19,11 @@ export default defineConfig(() => {
       // 打包文件目录
       outDir: 'dist/es',
       // 压缩
-      minify: true,
+      // minify: true,
       // css分离
       // cssCodeSplit: true,
       rollupOptions: {
+        external: ['vue'],
         input: ['src/index.ts'],
         output: [
           {

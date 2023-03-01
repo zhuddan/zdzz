@@ -10,6 +10,10 @@ export const menus: RouteRecordRaw[] = [
     path: 'cache',
     component: () => import('../views/examples/cache.vue'),
   },
+  {
+    path: 'hooks',
+    component: () => import('../views/examples/hooks.vue'),
+  },
 
 ];
 const router = createRouter({
