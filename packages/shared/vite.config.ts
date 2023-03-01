@@ -6,12 +6,8 @@ export default defineConfig(() => {
   return {
     plugins: [
       dts({
-        outputDir: 'dist/es',
-        tsConfigFilePath: './tsconfig.json',
-      }),
-      dts({
-        outputDir: 'dist/lib',
-        tsConfigFilePath: './tsconfig.json',
+        include: ['src/**/*.ts'],
+        outputDir: 'dist/types',
       }),
     ],
     build: {

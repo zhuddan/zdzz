@@ -1,17 +1,12 @@
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-
 // https://vitejs.dev/config/
 export default defineConfig(() => {
   return {
     plugins: [
       dts({
-        outputDir: 'dist/es',
-        tsConfigFilePath: './tsconfig.json',
-      }),
-      dts({
-        outputDir: 'dist/lib',
-        tsConfigFilePath: './tsconfig.json',
+        include: ['src/**/*.ts'],
+        outputDir: 'dist/types',
       }),
     ],
     build: {
@@ -19,7 +14,7 @@ export default defineConfig(() => {
       // 打包文件目录
       outDir: 'dist/es',
       // 压缩
-      // minify: true,
+      minify: true,
       // css分离
       // cssCodeSplit: true,
       rollupOptions: {
