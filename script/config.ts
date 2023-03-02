@@ -46,9 +46,9 @@ export const createConfig = (packageName: string): UserConfig => {
         entry: './src/index.ts',
       },
       rollupOptions: {
-        external: ['vue'],
+        external: ['vue', 'vue-router'],
         output: [
-        //  preserveModules
+          // preserveModules
           preserveModulesOutput('es'),
           preserveModulesOutput('cjs', 'lib'),
           // dist

@@ -2,6 +2,7 @@
 import { useToggle } from '@zdzz/hooks';
 import { ref } from 'vue';
 import UseToggle from './useToggle.vue';
+import UseRouteQuery from './useRouteQuery.vue';
 </script>
 
 <template>
@@ -10,6 +11,7 @@ import UseToggle from './useToggle.vue';
     <ul>
       <li>
         <UseToggle />
+        <UseRouteQuery />
       </li>
     </ul>
   </div>
