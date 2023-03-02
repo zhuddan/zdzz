@@ -14,11 +14,13 @@
     "suppressImplicitAnyIndexErrors":true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
+    "noEmit": true,
     "lib": [
       "esnext",
       "dom"
     ],
     "skipLibCheck": true,
-    "rootDir": "."
+    "rootDir": ".",
+    "types": ["node","vite/client"]
   }
 }
