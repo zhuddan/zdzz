@@ -15,5 +15,5 @@ export function getToken() {
 }
 
 export function removeToken() {
-  return webCache.remove('Token');
+  webCache.remove('Token');
 }

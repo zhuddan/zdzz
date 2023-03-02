@@ -6,12 +6,23 @@
   "module": "es/index.js",
   "typings": "lib/index.d.ts",
 	"unpkg": "dist/index.es.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs"
+    },
+    "./http": {
+      "types": "./http.d.ts"
+    }
+  },
   "files": [
 		"dist",
 		"lib",
 		"es",
 		"package.json",
-		"README.md"
+		"README.md",
+    "http.d.ts"
 	],
   "scripts": {
     "build": "pnpm run clear && vite build",

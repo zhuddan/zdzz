@@ -1,1 +1,2 @@
-export { CreateRuoyiAxiosTransform as CreateAxiosTransform, CreateRuoyiAxiosTransform } from './ruoyi';
+export { createRuoyiAxiosTransform as createAxiosTransform } from './ruoyi';
+export { createRuoyiAxiosTransform } from './ruoyi';

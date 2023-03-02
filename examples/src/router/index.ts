@@ -14,7 +14,10 @@ export const menus: RouteRecordRaw[] = [
     path: 'hooks',
     component: () => import('../views/examples/hooks/index.vue'),
   },
-
+  {
+    path: 'axios',
+    component: () => import('../views/examples/axios/index.vue'),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),

@@ -48,7 +48,7 @@ export abstract class AxiosTransform {
 export type CreateMessageFn = (mode: ErrorMessageMode, errorMessage: string) => void;
 export type CreateAxiosTransform = (options: {
   createMessage: CreateMessageFn;
-  getToken: () => string;
+  getToken: () => null | string;
   removeToken?: () => void;
   signoutHandler?: () => void;
 }) => AxiosTransform;
