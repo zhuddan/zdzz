@@ -1,20 +1,10 @@
-import { isNumber, isObject } from './is';
-
-export interface WebCacheTime {
-  day?: number;
-  hour?: number;
-  minutes?: number;
-  second?: number;
-}
-
-export interface WebCacheData {
-  value: any;
-  expires: number;
-}
+import { isNumber, isObject } from '../is';
+import type { WebCacheData, WebCacheTime } from './types';
 
 export class WebCache<T extends string> {
   projectName: string;
   projectVersion: string;
+  defaultExpires = 864e5 * 7;
 
   constructor({ projectName, time, projectVersion }: { projectName: string; projectVersion: string; time?: number | WebCacheTime }) {
     this.projectName = projectName;
@@ -23,8 +13,6 @@ export class WebCache<T extends string> {
     const t = isObject(time) ? this.formatTime(time) : time;
     this.defaultExpires = t;
   }
-
-  defaultExpires = 864e5 * 7;
 
   get VALUE_PREFIX() {
     return `${this.projectName}_${this.projectVersion}_`;
