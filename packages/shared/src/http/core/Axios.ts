@@ -1,4 +1,4 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import { cloneDeep } from 'lodash-es';
 import qs from 'qs';
@@ -75,7 +75,7 @@ export class VAxios {
     const axiosCanceler = new AxiosCanceler();
 
     // Request interceptor configuration processing
-    this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
+    this.axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
       // If cancel repeat request is turned on, then cancel repeat request is prohibited
       // @ts-expect-error ....
       const { ignoreCancelToken } = config.requestOptions;

@@ -7,6 +7,8 @@ const baseOutput = (moduleFormat: ModuleFormat, name?: string) => {
     globals: {
       vue: 'Vue',
       'vue-router': 'VueRouter',
+      axios: 'Axios',
+      qs: 'qs',
     },
     format: moduleFormat,
     entryFileNames: `[name]${moduleFormat === 'iife' ? '' : `.${moduleFormat}`}.js`,
@@ -20,6 +22,8 @@ const preserveModulesOutput = (moduleFormat: ModuleFormat, dir?: string) => {
     globals: {
       vue: 'Vue',
       'vue-router': 'VueRouter',
+      axios: 'Axios',
+      qs: 'qs',
     },
     format: moduleFormat,
     entryFileNames: '[name].js',
@@ -46,7 +50,7 @@ export const createConfig = (packageName: string): UserConfig => {
         entry: './src/index.ts',
       },
       rollupOptions: {
-        external: ['vue', 'vue-router'],
+        external: ['vue', 'vue-router', 'qs', 'axios'],
         output: [
           // preserveModules
           preserveModulesOutput('es'),
