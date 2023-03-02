@@ -65,12 +65,12 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
     beforeRequestHook: (config, options) => {
       const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true, urlPrefix } = options;
 
-      if (joinPrefix)
+      if (joinPrefix && isString(urlPrefix))
         config.url = `${urlPrefix}${config.url}`;
 
       if (apiUrl && isString(apiUrl))
         config.url = `${apiUrl}${config.url}`;
-
+      console.log(config.url);
       const params = config.params || {};
       const data = config.data || false;
       formatDate && data && !isString(data) && formatRequestDate(data);

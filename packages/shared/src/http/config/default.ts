@@ -32,6 +32,7 @@ export const defaultConfig: Partial<CreateAxiosOptions> = {
     // 接口地址
     // apiUrl: appConfig.VITE_APP_API_URL,
     // 接口拼接地址
+    urlPrefix: '',
     // urlPrefix: appConfig.VITE_APP_API_PREFIX,
     //  是否加入时间戳
     joinTime: true,
