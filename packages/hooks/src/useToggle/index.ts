@@ -1,7 +1,12 @@
-import { ref } from 'vue';
-export function useToggle() {
-  const state = ref(false);
-  function toggle() {
+import { isRef, ref } from 'vue';
+import type { MaybeRef } from '@zdzz/shared';
+export function useToggle(initValue: MaybeRef<boolean> = false) {
+  const state = isRef(initValue) ? initValue : ref(initValue);
+  function toggle(value?: boolean) {
+    if (value) {
+      state.value = value;
+      return;
+    }
     state.value = !state.value;
   }
 

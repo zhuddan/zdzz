@@ -12,7 +12,7 @@ export const menus: RouteRecordRaw[] = [
   },
   {
     path: 'hooks',
-    component: () => import('../views/examples/hooks.vue'),
+    component: () => import('../views/examples/hooks/index.vue'),
   },
 
 ];

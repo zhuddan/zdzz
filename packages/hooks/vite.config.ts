@@ -1,6 +1,6 @@
-import { packagesConfig } from '../../script/config';
+import { createConfig } from '../../script/config';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
-  return packagesConfig;
+  return createConfig('ZdzzHooks');
 });

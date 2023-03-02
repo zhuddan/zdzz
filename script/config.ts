@@ -1,74 +1,63 @@
 import type { UserConfig } from 'vite';
-import dts from 'vite-plugin-dts';
+import type { ModuleFormat } from 'rollup';
 
-export const packagesConfig: UserConfig = {
-  plugins: [
-    dts({
-      include: ['src/**/*.ts'],
-      outputDir: ['dist', 'lib', 'es'],
-    }),
-  ],
-  build: {
-    target: 'es2015',
-    outDir: 'dist',
-    minify: false,
-    chunkSizeWarningLimit: 1000,
-    lib: {
-      entry: './src/index.ts',
+import dts from 'vite-plugin-dts';
+const baseOutput = (moduleFormat: ModuleFormat, name?: string) => {
+  return {
+    globals: {
+      vue: 'Vue',
+      'vue-router': 'VueRouter',
     },
-    rollupOptions: {
-      external: ['vue'],
-      output: [
-        {
-          globals: {
-            vue: 'Vue',
-          },
-          format: 'es',
-          entryFileNames: '[name].js',
-          preserveModules: true,
-          dir: 'es',
-          preserveModulesRoot: 'src',
-        },
-        {
-          globals: {
-            vue: 'Vue',
-          },
-          format: 'cjs',
-          entryFileNames: '[name].js',
-          preserveModules: true,
-          dir: 'lib',
-          preserveModulesRoot: 'src',
-        },
-        // dist
-        {
-          globals: {
-            vue: 'Vue',
-          },
-          format: 'iife',
-          entryFileNames: '[name].js',
-          dir: 'dist',
-          name: 'zd',
-        },
-        {
-          globals: {
-            vue: 'Vue',
-          },
-          format: 'es',
-          entryFileNames: '[name].es.js',
-          dir: 'dist',
-          preserveModulesRoot: 'src',
-        },
-        {
-          globals: {
-            vue: 'Vue',
-          },
-          format: 'cjs',
-          entryFileNames: '[name].cjs.js',
-          dir: 'dist',
-          preserveModulesRoot: 'src',
-        },
-      ],
-    },
-  },
+    format: moduleFormat,
+    entryFileNames: `[name]${moduleFormat === 'iife' ? '' : `.${moduleFormat}`}.js`,
+    dir: 'dist',
+    preserveModulesRoot: 'src',
+    name,
+  };
 };
-export default packagesConfig;
+const preserveModulesOutput = (moduleFormat: ModuleFormat, dir?: string) => {
+  return {
+    globals: {
+      vue: 'Vue',
+      'vue-router': 'VueRouter',
+    },
+    format: moduleFormat,
+    entryFileNames: '[name].js',
+    preserveModules: true,
+    dir: dir || moduleFormat,
+    preserveModulesRoot: 'src',
+  };
+};
+
+export const createConfig = (packageName: string): UserConfig => {
+  return {
+    plugins: [
+      dts({
+        include: ['src/**/*.ts'],
+        outputDir: ['dist', 'lib', 'es'],
+      }),
+    ],
+    build: {
+      target: 'es2015',
+      outDir: 'dist',
+      minify: false,
+      chunkSizeWarningLimit: 1000,
+      lib: {
+        entry: './src/index.ts',
+      },
+      rollupOptions: {
+        external: ['vue'],
+        output: [
+        //  preserveModules
+          preserveModulesOutput('es'),
+          preserveModulesOutput('cjs', 'lib'),
+          // dist
+          baseOutput('iife', packageName),
+          baseOutput('es'),
+          baseOutput('cjs'),
+        ],
+      },
+    },
+  };
+};
+export default createConfig;
