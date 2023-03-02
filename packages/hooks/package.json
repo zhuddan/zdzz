@@ -14,10 +14,9 @@
 		"README.md"
 	],
   "scripts": {
-    "build": "pnpm run clear && vite build -c ../../script/config.ts",
+    "build": "pnpm run clear && vite build",
     "version:patch": "pnpm version patch",
-    "clear": "rm -rf dist es lib",
-    "vite:inspect": "vite --inspect"
+    "clear": "rm -rf dist es lib"
   },
   "keywords": [],
   "author": "",

@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "pnpm --filter ./examples run dev",
     "build:examples": "pnpm --filter ./examples run build",
-    "reload": "pnpm --filter ./examples run reload",
     "build": "pnpm --filter=@zdzz/* run build",
     "build:shared": "pnpm --filter=@zdzz/shared run build",
     "build:hooks": "pnpm --filter=@zdzz/hooks run build",
     "version:patch": "pnpm --filter=@zdzz/* run version:patch",
+    "version:patch:shared": "pnpm --filter=@zdzz/shared run version:patch",
+    "version:patch:hooks": "pnpm --filter=@zdzz/hooks run version:patch",
     "clear": "pnpm --filter=@zdzz/* run clear",
     "changeset": "changeset",
     "changeset:publish": "pnpm changeset publish",

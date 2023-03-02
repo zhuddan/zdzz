@@ -16,7 +16,7 @@
   "scripts": {
     "build": "pnpm run clear && vite build",
     "version:patch": "pnpm version patch",
-    "clear": "rm -rf dist && rm -rf es && rm -rf lib"
+    "clear": "rm -rf dist es lib"
   },
   "keywords": [],
   "author": "",
