@@ -9,7 +9,7 @@ declare global {
     msg?: string;
   };
 
-  declare type ListData<T> = ResponseResult<{
+  declare type ResponseList<T> = ResponseResult<{
     total: number;
     rows: T[];
   }>;
@@ -18,10 +18,10 @@ declare global {
     data: T;
   }>;
 
-  declare type ListParams<T = object> = {
+  declare type ResponseListParams<T = object> = {
     pageNum: number;
     pageSize: number;
   } & Partial<T>;
 
-  declare type ListQuery<T = Recordable> = ListParams & Partial<T>;
+  declare type ListQuery<T = Recordable> = ResponseListParams & Partial<T>;
 }
