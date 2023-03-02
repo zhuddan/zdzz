@@ -14,9 +14,27 @@ export const defHttp = createAxios({
 });
 
 export function getCodeImg() {
-  return defHttp.get<ResponseResult<{ img: string; uuid: string }>>(
+  return defHttp.put<ResponseResult<{ img: string; uuid: string }>>(
     {
       url: '/captchaImage',
+    },
+    {
+      withToken: false,
+    },
+  );
+}
+
+// 登录方法
+export function login(username: string, password: string, code: string, uuid: string) {
+  return defHttp.post<ResponseResult<{ token: string }>>(
+    {
+      url: '/login',
+      data: {
+        username,
+        password,
+        code,
+        uuid,
+      },
     },
     {
       withToken: false,

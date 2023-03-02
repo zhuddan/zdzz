@@ -36,8 +36,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
       const { code, msg } = data;
 
       // 这里逻辑可以根据项目进行修改
-      // const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
-      const hasSuccess = '123';
+      const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
       if (hasSuccess)
         return data;
 
@@ -57,6 +56,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
           else
             errorMsg = '未知错误';
       }
+      console.log(createMessage);
       createMessage(options.errorMessageMode, errorMsg);
       throw new Error(errorMsg || '请求出错，请稍候重试');
     },
@@ -149,6 +149,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
         if (err?.includes('Network Error'))
           errMessage = '网络异常，请检查您的网络连接是否正常!';
         if (errMessage) {
+          console.log(123);
           createMessage(errorMessageMode, errMessage);
           return Promise.reject(error);
         }
