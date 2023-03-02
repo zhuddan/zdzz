@@ -44,7 +44,7 @@ export const createConfig = (packageName: string): UserConfig => {
     build: {
       target: 'es2015',
       outDir: 'dist',
-      minify: false,
+      minify: true,
       chunkSizeWarningLimit: 1000,
       lib: {
         entry: './src/index.ts',

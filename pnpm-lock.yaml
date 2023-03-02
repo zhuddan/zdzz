@@ -81,11 +81,16 @@ importers:
 
   examples:
     specifiers:
+      '@types/notie': ^4.3.0
       '@zdzz/hooks': workspace:*
       '@zdzz/shared': workspace:*
+      notie: ^4.3.1
     dependencies:
       '@zdzz/hooks': link:../packages/hooks
       '@zdzz/shared': link:../packages/shared
+      notie: 4.3.1
+    devDependencies:
+      '@types/notie': 4.3.0
 
   packages/hooks:
     specifiers:
@@ -798,6 +803,10 @@ packages:
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+    dev: true
+
+  /@types/notie/4.3.0:
+    resolution: {integrity: sha512-UMcYoqC23NAZNE9/kWX2gIAbqOA4nQjY2yEdsnSpKGlNpY0eP/U59OEVFSS+P4tMM5TOy5Beq+6yBLx+lLpGxA==}
     dev: true
 
   /@types/qs/6.9.7:
@@ -2967,6 +2976,10 @@ packages:
   /normalize-path/3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  /notie/4.3.1:
+    resolution: {integrity: sha512-KdPHy0LJhQQiY2ouFtMjoEj/NZuw3KfRQPQfU28kbwrdhVAA0BHsuW9Rm1OZgcO5u/Us6uuAKAvsYtQdjVMSsg==}
+    dev: false
 
   /nth-check/2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}

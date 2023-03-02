@@ -93,7 +93,7 @@ module.exports = {
       },
     },
     {
-      files: ['*.scss', '**/*.scss'],
+      files: ['*.scss', '**/*.scss', '**/*.css'],
       customSyntax: 'postcss-scss',
       extends: ['stylelint-config-standard'],
     },

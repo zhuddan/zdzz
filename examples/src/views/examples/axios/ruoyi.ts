@@ -1,22 +1,27 @@
 import { createAxios, createRuoyiAxiosTransform } from '@zdzz/shared';
 import { getToken, removeToken } from '../../../utils/cache';
-
+import { alert } from 'notie';
+import './notie.css';
 const transform = createRuoyiAxiosTransform({
   removeToken,
   getToken,
-  createMessage: alert,
+  createMessage: (a, b) => alert({
+    text: b,
+    type: 'error',
+  }),
 });
 export const defHttp = createAxios({
   transform,
   requestOptions: {
-    apiUrl: 'http://116.52.144.173:8994',
+    // apiUrl: 'http://116.52.144.173:8994',
+    apiUrl: '',
   },
 });
 
 export function getCodeImg() {
   return defHttp.put<ResponseResult<{ img: string; uuid: string }>>(
     {
-      url: '/captchaImage',
+      url: '/captchaImasge',
     },
     {
       withToken: false,

@@ -56,21 +56,20 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
           else
             errorMsg = '未知错误';
       }
-      console.log(createMessage);
+
       createMessage(options.errorMessageMode, errorMsg);
       throw new Error(errorMsg || '请求出错，请稍候重试');
     },
 
     // 请求之前处理config
     beforeRequestHook: (config, options) => {
-      const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true, urlPrefix } = options;
+      const { apiUrl = '', joinPrefix, joinParamsToUrl, formatDate, joinTime = true, urlPrefix } = options;
 
       if (joinPrefix && isString(urlPrefix))
         config.url = `${urlPrefix}${config.url}`;
 
       if (apiUrl && isString(apiUrl))
         config.url = `${apiUrl}${config.url}`;
-      console.log(config.url);
       const params = config.params || {};
       const data = config.data || false;
       formatDate && data && !isString(data) && formatRequestDate(data);
@@ -149,16 +148,16 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
         if (err?.includes('Network Error'))
           errMessage = '网络异常，请检查您的网络连接是否正常!';
         if (errMessage) {
-          console.log(123);
           createMessage(errorMessageMode, errMessage);
           return Promise.reject(error);
         }
       }
       catch (error) {
-        console.log('[responseInterceptorsCatch error]');
         throw new Error(error as unknown as string);
       }
-      checkStatus(error?.response?.status, msg);
+      checkStatus(error?.response?.status, msg).catch((e) => {
+        createMessage(errorMessageMode, e);
+      });
 
       return Promise.reject(error);
     },
