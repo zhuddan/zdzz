@@ -1,1 +1,2 @@
-export { useToggle } from './hooks/useToggle';
+export { useContext } from './useContext';
+export { useToggle } from './useToggle';

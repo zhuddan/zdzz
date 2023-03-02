@@ -1,50 +1,81 @@
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-// https://vitejs.dev/config/
-export default defineConfig(() => {
+
+const config_b = defineConfig(() => {
   return {
     plugins: [
       dts({
         include: ['src/**/*.ts'],
-        outputDir: 'dist/types',
+        outputDir: ['dist', 'lib', 'es'],
       }),
     ],
     build: {
-      target: 'modules',
+      target: 'es2015',
       // 打包文件目录
-      outDir: 'dist/es',
+      outDir: 'dist',
       // 压缩
-      minify: true,
+      minify: false,
       // css分离
       // cssCodeSplit: true,
+      chunkSizeWarningLimit: 1000,
+      lib: {
+        entry: './src/index.ts',
+      },
       rollupOptions: {
         external: ['vue'],
-        input: ['src/index.ts'],
         output: [
           {
+            globals: {
+              vue: 'Vue',
+            },
             format: 'es',
-            // 不用打包成.es.js,这里我们想把它打包成.js
             entryFileNames: '[name].js',
-            // 让打包目录和我们目录对应
             preserveModules: true,
-            // 配置打包根目录
-            dir: 'dist/es',
+            dir: 'es',
             preserveModulesRoot: 'src',
           },
           {
+            globals: {
+              vue: 'Vue',
+            },
             format: 'cjs',
             entryFileNames: '[name].js',
-            // 让打包目录和我们目录对应
             preserveModules: true,
-            // 配置打包根目录
-            dir: 'dist/lib',
+            dir: 'lib',
+            preserveModulesRoot: 'src',
+          },
+          {
+            globals: {
+              vue: 'Vue',
+            },
+            format: 'iife',
+            entryFileNames: '[name].js',
+            dir: 'dist',
+            name: 'zd',
+          },
+          {
+            globals: {
+              vue: 'Vue',
+            },
+            format: 'es',
+            entryFileNames: '[name].es.js',
+            dir: 'dist',
+            preserveModulesRoot: 'src',
+          },
+          {
+            globals: {
+              vue: 'Vue',
+            },
+            format: 'cjs',
+            entryFileNames: '[name].cjs.js',
+            dir: 'dist',
             preserveModulesRoot: 'src',
           },
         ],
       },
-      lib: {
-        entry: './src/index.ts',
-      },
     },
   };
 });
+
+// export default config_a;
+export default config_b;

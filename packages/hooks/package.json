@@ -8,7 +8,8 @@
   "scripts": {
     "build": "pnpm run clear && vite build",
     "version:patch": "pnpm version patch",
-    "clear": "rm -rf dist && rm -rf es && rm -rf lib"
+    "clear": "rm -rf dist es lib",
+    "vite:inspect": "vite --inspect"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,6 @@
     "@zdzz/shared": "workspace:*"
   },
   "peerDependencies": {
-    "vue": "^3.2.25"
+    "vue": "^3.2.47"
   }
 }

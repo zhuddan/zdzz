@@ -11,10 +11,8 @@ module.exports = {
         'no-unused-vars': 'off',
         'no-undef': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
-        'simple-import-sort/imports': 'off',
-        'simple-import-sort/exports': 'off',
-        'unused-imports/no-unused-imports': 'off',
-        'unused-imports/no-unused-vars': 'off',
+        // 'simple-import-sort/imports': 'off',
+        // 'simple-import-sort/exports': 'off',
       },
     },
     {
@@ -37,7 +35,7 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended',
   ],
-  plugins: ['simple-import-sort', 'unused-imports'],
+  plugins: ['simple-import-sort'],
   settings: {
     'import/resolver': {
       node: {
@@ -376,5 +374,8 @@ module.exports = {
       svg: 'always',
       math: 'always',
     }],
+
+    // plugins
+    'simple-import-sort/exports': 'error',
   },
 };

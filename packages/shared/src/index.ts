@@ -1,2 +1,3 @@
-export * from './utils/is';
+export * from './types';
 export * from './utils/cache';
+export * from './utils/is';
