@@ -1,18 +1,18 @@
 {
   "name": "@zdzz/hooks",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
   "typings": "lib/index.d.ts",
-	"unpkg": "dist/index.es.js",
+  "unpkg": "dist/index.es.js",
   "files": [
-		"dist",
-		"lib",
-		"es",
-		"package.json",
-		"README.md"
-	],
+    "dist",
+    "lib",
+    "es",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
     "build": "pnpm run clear && vite build",
     "version:patch": "pnpm version patch",
