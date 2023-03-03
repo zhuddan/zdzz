@@ -50,7 +50,7 @@ export interface DictBaseOptions {
   isLazy: boolean;
 }
 
-export interface FormatDictOptions<T extends DictDataLike = DictDataLike> {
+export interface FormatOptions<T extends DictDataLike = DictDataLike> {
   symbol?: string;
   isRaw?: boolean;
   labelField?: keyof T;

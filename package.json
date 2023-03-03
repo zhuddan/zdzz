@@ -4,6 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
+    "reload":"pnpm run build && pnpm run dev",
     "dev": "pnpm --filter ./examples run dev",
     "build:examples": "pnpm --filter ./examples run build",
     "build": "pnpm --filter=@zdzz/* run build",

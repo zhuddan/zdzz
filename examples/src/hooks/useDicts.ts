@@ -3,30 +3,9 @@ import { computed, toRefs, unref } from 'vue';
 import { defHttp } from '@/utils/defHttp';
 import { Dict } from '@zdzz/shared';
 export type DictTypes =
-| 'sys_user_sex' // 性别
-| 'sys_edu_study' // 学历
-| 'exam_questions_type' // 题目类型
-| 'sys_normal_disable'
-| 'sys_notice_type'
 | 'sys_user_sex'
-| 'report_type'
-| 'industry' // 所属产业
-| 'property' // 建设性质
-| 'plant_type' // 厂房类型
-| 'plant_type_second' // 厂房类型二
-| 'land_status' // 用地落实情况
-| 'environment' // 环评情况
-| 'bid_type' // 招投标情况
-| 'industry_investment' // 纳入工业投资统计情况
-| 'park_level'
-| 'build_status' // 建设状态
-| 'completion_status' // 开竣工状态
-| 'product_type' // 产业类型
-| 'approval' //     立项批复情况
-| 'land_content' //     用地落实情况
-| 'environmental_content' //     环评情况
-| 'bidding_situation' //     招投标情况
-| 'building_content'; //     施工许可
+| 'sys_normal_disable'
+| 'sys_notice_type';
 
 const getDicts: LoadDict<DictTypes> = (dictType) => {
   return new Promise<OriginDictData[]>((resolve, reject) => {
@@ -54,7 +33,7 @@ const getDicts: LoadDict<DictTypes> = (dictType) => {
 interface BaseDicts<DT extends string, F, L> {
   dicts: DictDataListRecord<DT>;
   dictsLoading: DictDataLoadingRecord<DT>;
-  format: F;// typeof format;
+  format: F; // typeof format;
   load: L; // typeof load;
 }
 export function useDicts<DT extends DictTypes = DictTypes>(dts: DT[], options: Partial<DictBaseOptions> = {}) {
