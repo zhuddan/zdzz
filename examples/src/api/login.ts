@@ -1,21 +1,7 @@
-import { createAxios, createRuoyiAxiosTransform } from '@zdzz/shared';
-import { getToken, removeToken } from '../../../utils/cache';
-import { useMessage } from '../../../hooks/useMessage';
-const apiUrl = 'http://116.52.144.173:8994';
+import { defHttp } from '@/utils/defHttp';
 
-const { createErrorMsg } = useMessage();
-const transform = createRuoyiAxiosTransform({
-  removeToken,
-  getToken,
-  createMessage: (a, b) => createErrorMsg(b),
-});
-export const defHttp = createAxios({
-  transform,
-  requestOptions: {
-    apiUrl,
-  },
-});
-
+import type { UserModel } from './model/userModel';
+// 获取验证码
 export function getCodeImg() {
   return defHttp.get<ResponseResult<{ img: string; uuid: string }>>(
     {
@@ -43,4 +29,11 @@ export function login(username: string, password: string, code: string, uuid: st
       withToken: false,
     },
   );
+}
+
+// 获取用户详细信息
+export function getInfo() {
+  return defHttp.get<ResponseResult<UserModel>>({
+    url: '/getInfo',
+  });
 }

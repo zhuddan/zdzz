@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useMessage } from '../../../hooks/useMessage';
-import { setToken } from '../../../utils/cache';
-import { getCodeImg, login } from './ruoyi';
+import { useMessage } from '@/hooks/useMessage';
+import { setToken } from '@/utils/cache';
+import { getCodeImg, login } from '@/api/login';
+import { useUserStore } from '@/store/modules/user';
 
 const router = useRouter();
 const username = ref('admin');
@@ -12,8 +13,11 @@ const code = ref('');
 const uuid = ref('');
 const codeUrl = ref('');
 const { createErrorMsg } = useMessage();
-// const userStore = useUserStore();
+const userStore = useUserStore();
 const loading = ref(false);
+function getUserInfo() {
+  return userStore.getInfo();
+}
 function handleLogin() {
   if (!username.value) {
     createErrorMsg('用户名不能为空');
@@ -29,18 +33,21 @@ function handleLogin() {
     return;
   }
   loading.value = true;
-  login(username.value, password.value, code.value, uuid.value).then((res) => {
-    setToken(res.token);
-  }).finally(() => {
-    loading.value = false;
-  });
+  userStore.login(username.value, password.value, code.value, uuid.value)
+    .then(() => {
+      return getUserInfo();
+    })
+    .catch(() => {
+      code.value = '';
+      getCode();
+    }).finally(() => {
+      loading.value = false;
+    });
 }
 function getCode() {
   getCodeImg().then((res) => {
     codeUrl.value = `data:image/gif;base64,${res.img}`;
     uuid.value = res.uuid;
-  }).catch(() => {
-    getCode();
   });
 }
 getCode();

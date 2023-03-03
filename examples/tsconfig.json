@@ -12,7 +12,11 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["@zdzz/shared/global","vite/client"]
+    "types": ["@zdzz/shared/global","vite/client"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./types/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
