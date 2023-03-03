@@ -16,7 +16,7 @@
   "scripts": {
     "build": "pnpm run clear && vite build",
     "version:patch": "pnpm version patch",
-    "clear": "rm -rf dist es lib node_modules"
+    "clear": "rm -rf dist es lib "
   },
   "keywords": [],
   "author": "",
@@ -26,8 +26,5 @@
   },
   "peerDependencies": {
     "vue": "^3.2.47"
-  },
-  "devDependencies": {
-    "@zdzz/types": "workspace:*"
   }
 }
