@@ -7,7 +7,6 @@ import { isFunction } from '../../is';
 import type { RequestOptions, Result, UploadFileParams } from '../types';
 import { AxiosCanceler } from './axiosCancel';
 import type { CreateAxiosOptions } from './axiosTransform';
-export * from './axiosTransform';
 
 /**
  * @description:  axios module
