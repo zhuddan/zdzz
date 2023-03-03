@@ -7,7 +7,9 @@ import { checkStatus } from '../core/checkStatus';
 import { formatRequestDate, joinTimestamp } from '../core/helper';
 import { setObjToUrlParams } from '../utils';
 
-export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage, getToken, removeToken, signoutHandler }) => {
+export const createRuoyiAxiosTransform: CreateAxiosTransform = (
+  { createMessage, getToken, removeToken, signoutHandler } = {},
+) => {
   const transform: AxiosTransform = {
     /**
      * @description: 处理请求数据。如果数据不是预期格式，可直接抛出错误
@@ -56,7 +58,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
             errorMsg = '未知错误';
       }
 
-      createMessage(options.errorMessageMode, errorMsg);
+      createMessage?.(options.errorMessageMode, errorMsg);
       throw new Error(errorMsg || '请求出错，请稍候重试');
     },
 
@@ -112,7 +114,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
      */
     requestInterceptors: (config, options) => {
       // 请求之前处理config
-      const token = getToken();
+      const token = getToken?.();
       if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
         // jwt token
         const tokenKey = options.requestOptions?.tokenKey as string;
@@ -147,7 +149,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
         if (err?.includes('Network Error'))
           errMessage = '网络异常，请检查您的网络连接是否正常!';
         if (errMessage) {
-          createMessage(errorMessageMode, errMessage);
+          createMessage?.(errorMessageMode, errMessage);
           return Promise.reject(error);
         }
       }
@@ -155,7 +157,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage,
         throw new Error(error as unknown as string);
       }
       checkStatus(error?.response?.status, msg).catch((e) => {
-        createMessage(errorMessageMode, e);
+        createMessage?.(errorMessageMode, e);
       });
 
       return Promise.reject(error);

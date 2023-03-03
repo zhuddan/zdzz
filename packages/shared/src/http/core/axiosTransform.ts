@@ -46,9 +46,10 @@ export abstract class AxiosTransform {
   responseInterceptorsCatch?: (axiosInstance: AxiosResponse, error: Error) => void;
 }
 export type CreateMessageFn = (mode: ErrorMessageMode, errorMessage: string) => void;
-export type CreateAxiosTransform = (options: {
-  createMessage: CreateMessageFn;
-  getToken: () => null | string;
+export interface CreateAxiosTransformOptions {
+  createMessage?: CreateMessageFn;
+  getToken?: () => null | string;
   removeToken?: () => void;
   signoutHandler?: () => void;
-}) => AxiosTransform;
+}
+export type CreateAxiosTransform = (options?: CreateAxiosTransformOptions) => AxiosTransform;
