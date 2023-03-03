@@ -40,7 +40,8 @@ export const createConfig = (packageName: string, replacePath = false): UserConf
         include: ['src/**/*.ts', 'type.d.ts'],
         outputDir: ['dist', 'es', 'lib'],
         beforeWriteFile(filePath: string, content) {
-          const filePathOut = filePath.replace(/dist\/src\//, 'dist/')
+          const filePathOut = filePath
+            .replace(/dist\/src\//, 'dist/')
             .replace(/es\/src\//, 'es/')
             .replace(/lib\/src\//, 'lib/');
           return {

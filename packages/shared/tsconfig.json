@@ -5,6 +5,6 @@
     "baseUrl": "./",
     "rootDir": "./",
     "noEmit": true,
-    "types": ["@zdzz/types"]
+    "types": ["@zdzz/shared/global"]
   }
 }
