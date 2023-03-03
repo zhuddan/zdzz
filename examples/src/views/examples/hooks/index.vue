@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useToggle } from '@zdzz/hooks';
 import { ref } from 'vue';
-import UseToggle from './useToggle.vue';
-import UseRouteQuery from './useRouteQuery.vue';
+import HooksUseToggle from './HooksUseToggle.vue';
+import HooksUseRouteQuery from './HooksUseRouteQuery.vue';
 </script>
 
 <template>
@@ -10,8 +10,8 @@ import UseRouteQuery from './useRouteQuery.vue';
     <h1>hooks</h1>
     <ul>
       <li>
-        <UseToggle />
-        <UseRouteQuery />
+        <HooksUseToggle />
+        <HooksUseRouteQuery />
       </li>
     </ul>
   </div>

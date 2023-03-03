@@ -1,9 +1,10 @@
 {
-  "include": ["src"],
+  "include": ["src","type.d.ts"],
   "extends":"../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "./",
-    "noEmit": true
+    "noEmit": true,
+    "types": ["@zdzz/types"]
   }
 }

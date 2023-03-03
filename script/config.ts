@@ -1,6 +1,5 @@
 import type { UserConfig } from 'vite';
 import type { ModuleFormat } from 'rollup';
-
 import dts from 'vite-plugin-dts';
 const baseOutput = (moduleFormat: ModuleFormat, name?: string) => {
   return {
@@ -17,6 +16,7 @@ const baseOutput = (moduleFormat: ModuleFormat, name?: string) => {
     name,
   };
 };
+
 const preserveModulesOutput = (moduleFormat: ModuleFormat, dir?: string) => {
   return {
     globals: {
@@ -33,12 +33,21 @@ const preserveModulesOutput = (moduleFormat: ModuleFormat, dir?: string) => {
   };
 };
 
-export const createConfig = (packageName: string): UserConfig => {
+export const createConfig = (packageName: string, replacePath = false): UserConfig => {
   return {
     plugins: [
       dts({
-        include: ['src/**/*.ts'],
-        outputDir: ['dist', 'lib', 'es'],
+        include: ['src/**/*.ts', 'type.d.ts'],
+        outputDir: ['dist', 'es', 'lib'],
+        beforeWriteFile(filePath: string, content) {
+          const filePathOut = filePath.replace(/dist\/src\//, 'dist/')
+            .replace(/es\/src\//, 'es/')
+            .replace(/lib\/src\//, 'lib/');
+          return {
+            filePath: replacePath ? filePath : filePathOut,
+            content,
+          };
+        },
       }),
     ],
     build: {

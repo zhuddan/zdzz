@@ -6,7 +6,6 @@ import type { AxiosTransform, CreateAxiosTransform } from '../core/axiosTransfor
 import { checkStatus } from '../core/checkStatus';
 import { formatRequestDate, joinTimestamp } from '../core/helper';
 import { setObjToUrlParams } from '../utils';
-import type { Recordable } from 'src/types';
 
 export const createRuoyiAxiosTransform: CreateAxiosTransform = ({ createMessage, getToken, removeToken, signoutHandler }) => {
   const transform: AxiosTransform = {

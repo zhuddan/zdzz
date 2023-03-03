@@ -1,6 +1,4 @@
-import type { Recordable } from '../../types';
 import { isObject, isString } from '../../is';
-
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 export function joinTimestamp<T extends boolean>(join: boolean, restful: T): T extends true ? string : object;

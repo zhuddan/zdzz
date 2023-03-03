@@ -7,11 +7,7 @@
   width: 100%;
   z-index: 2147483647;
   box-sizing: border-box;
-  -o-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  -ms-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 5px 0 rgb(0 0 0 / 50%);
 }
 
 /* @media screen and (max-width: 900px) {
@@ -53,11 +49,11 @@
 }
 
 .notie-background-overlay {
-  background-color: #FFFFFF;
+  background-color: #FFF;
 }
 
 .notie-textbox {
-  color: #FFFFFF;
+  color: #FFF;
   padding: 5px 8px;
 }
 
@@ -77,13 +73,13 @@
 }
 
 .notie-button {
-  color: #FFFFFF;
+  color: #FFF;
   padding: 10px;
   cursor: pointer;
 }
 
 .notie-element {
-  color: #FFFFFF;
+  color: #FFF;
   padding: 10px;
 }
 
@@ -104,7 +100,7 @@
 }
 
 .notie-input-field {
-  background-color: #FFFFFF;
+  background-color: #FFF;
   border: 0;
   font-family: inherit;
   font-size: inherit;
@@ -116,23 +112,19 @@
 }
 
 .notie-select-choice-repeated {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgb(255 255 255 / 20%);
   box-sizing: border-box;
 }
 
 .notie-date-selector-inner {
   margin: 0 auto;
   max-width: 900px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
 
 .notie-date-selector-inner [contenteditable],
 .notie-date-selector-inner [contenteditable]:focus {
-  outline: 0px solid transparent;
+  outline: 0 solid transparent;
 }
 
 .notie-date-selector-up {

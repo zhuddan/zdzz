@@ -1,6 +1,6 @@
 {
   "name": "@zdzz/hooks",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -16,7 +16,7 @@
   "scripts": {
     "build": "pnpm run clear && vite build",
     "version:patch": "pnpm version patch",
-    "clear": "rm -rf dist es lib"
+    "clear": "rm -rf dist es lib node_modules"
   },
   "keywords": [],
   "author": "",
@@ -26,5 +26,8 @@
   },
   "peerDependencies": {
     "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "@zdzz/types": "workspace:*"
   }
 }

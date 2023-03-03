@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clear":"rm -rf dist node_modules"
   },
   "dependencies": {
     "@zdzz/hooks": "workspace:*",
     "@zdzz/shared": "workspace:*",
-    "notie": "^4.3.1"
+    "notie": "^4.3.1",
+    "pinia": "^2.0.32"
   },
   "devDependencies": {
     "@types/notie": "^4.3.0"
