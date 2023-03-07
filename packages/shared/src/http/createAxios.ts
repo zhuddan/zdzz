@@ -4,7 +4,14 @@ import { VAxios } from './core/Axios';
 import { merge } from 'lodash-es';
 import { defaultConfig } from './config/default';
 
-export function createAxios(opt: Partial<CreateAxiosOptions> = {}) {
-  const options = merge(defaultConfig, opt);
-  return new VAxios(options);
+export function createAxios(apiUrl: string, options: Partial<CreateAxiosOptions> = {}) {
+  const mergeOptions = merge<Partial<CreateAxiosOptions>, Partial<CreateAxiosOptions>>(options, {
+    requestOptions: {
+      apiUrl,
+    },
+  });
+  const _options = merge(defaultConfig, {
+    ...mergeOptions,
+  });
+  return new VAxios(_options);
 }
