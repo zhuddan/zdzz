@@ -1,4 +1,3 @@
-declare type Shared = string;
 declare type ResponseResult<T> = T & {
   code: number;
   msg?: string;
