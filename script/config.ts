@@ -1,11 +1,10 @@
 import type { PluginOption, UserConfig } from 'vite';
-import type { ModuleFormat } from 'rollup';
+import type { ModuleFormat, OutputOptions } from 'rollup';
 import dts from 'vite-plugin-dts';
 import vuePlugin from '@vitejs/plugin-vue';
 import DefineOptions from 'unplugin-vue-define-options/vite';
-
 type PackageName = `zd_${'shared' | 'hooks' | 'components'}` ;
-
+dts;
 const GLOBALS = {
   vue: 'Vue',
   'vue-router': 'VueRouter',
@@ -27,9 +26,10 @@ const EXTERNAL = [
   'pdfjs-dist/legacy/build/pdf.js',
   '@zdzz/shared',
   '@zdzz/hooks',
+  /\.scss/,
 ];
 
-const baseOutput = (moduleFormat: ModuleFormat, name?: string) => {
+export function distOutput(moduleFormat: ModuleFormat, name?: string): OutputOptions {
   return {
     globals: GLOBALS,
     format: moduleFormat,
@@ -38,18 +38,18 @@ const baseOutput = (moduleFormat: ModuleFormat, name?: string) => {
     preserveModulesRoot: 'src',
     name,
   };
-};
+}
 
-const preserveModulesOutput = (moduleFormat: ModuleFormat, dir?: string) => {
+export function preserveModulesOutput(format: ModuleFormat, dir?: string): OutputOptions {
   return {
     globals: GLOBALS,
-    format: moduleFormat,
+    format,
     entryFileNames: '[name].js',
     preserveModules: true,
-    dir: dir || moduleFormat,
+    dir: dir || format,
     preserveModulesRoot: 'src',
   };
-};
+}
 
 export const createConfig = (
   packageName: PackageName,
@@ -62,6 +62,7 @@ export const createConfig = (
   const isVue = options?.vue || false;
   const basePlugins: PluginOption[] = [];
   if (isVue) basePlugins.push(vuePlugin(), DefineOptions());
+
   return {
     plugins: [
       ...basePlugins,
@@ -81,8 +82,9 @@ export const createConfig = (
       }),
     ],
     build: {
-      target: 'es2015',
-      outDir: 'dist',
+      // target: 'es2015',
+      target: 'modules',
+      cssCodeSplit: true,
       minify: true,
       chunkSizeWarningLimit: 1000,
       lib: {
@@ -95,9 +97,9 @@ export const createConfig = (
           preserveModulesOutput('es'),
           preserveModulesOutput('cjs', 'lib'),
           // dist
-          baseOutput('iife', packageName),
-          baseOutput('es'),
-          baseOutput('cjs'),
+          distOutput('iife', packageName),
+          distOutput('es'),
+          distOutput('cjs'),
         ],
       },
     },

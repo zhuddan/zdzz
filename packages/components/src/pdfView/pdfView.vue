@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import 'pdfjs-dist/build/pdf.worker.entry';
-import { nextTick, ref, watch } from 'vue';
+import { nextTick, onMounted, ref, useSlots, watch } from 'vue';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.js';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.js';
-// import { sleep } from '@zdzz/shared';
+import { sleep } from '@zdzz/shared';
+// import './style/index.scss';
+
 const props = defineProps({
   url: {
     type: String,
@@ -30,14 +32,15 @@ async function update() {
         await nextTick();
         if (canvasRef.value && canvasRef.value.length) {
           // 每10页休息一下，避免页面卡顿
-          // if (pageNum % 10 == 0)
-          // await sleep();
+          if (pageNum % 10 == 0)
+            await sleep();
           await render(pdf, pageNum);
         }
       }
     })
     .catch((e) => {
-      errorMsg.value = e.message;
+      console.log(e);
+      errorMsg.value = e.message.replace('Missing PDF', '找不到PDF');
       isError.value = true;
       numPages.value = 0;
     }).
@@ -63,6 +66,13 @@ async function render(pdf: PDFDocumentProxy, pageNum: number) {
 }
 
 watch(() => props.url, update, { immediate: true });
+defineExpose({
+  update,
+});
+const slot = useSlots();
+onMounted(() => {
+  console.log(slot);
+});
 </script>
 
 <template>
@@ -76,33 +86,20 @@ watch(() => props.url, update, { immediate: true });
       v-else
       class="error-wrap"
     >
-      <slot name="error"></slot>
+      <div v-if="slot?.error">
+        <slot name="error"></slot>
+      </div>
+
+      <template v-else>
+        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon-error"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm0 393.664L407.936 353.6a38.4 38.4 0 1 0-54.336 54.336L457.664 512 353.6 616.064a38.4 38.4 0 1 0 54.336 54.336L512 566.336 616.064 670.4a38.4 38.4 0 1 0 54.336-54.336L566.336 512 670.4 407.936a38.4 38.4 0 1 0-54.336-54.336L512 457.664z" /></svg>
+        <p>
+          {{ errorMsg }}
+        </p>
+      </template>
+      <button class="refresh-btn" @click="update">
+        刷新
+      </button>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-.pdf-view{
-  min-height: 300px;
-
-  canvas {
-    width: 100%;
-  }
-
-  .pdf-pages-wrapper {
-    border: 1px solid #cfcfcf;
-
-    + .pdf-pages-wrapper {
-      margin-top: 10px;
-    }
-  }
-
-  .error-wrap{
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-}
-</style>

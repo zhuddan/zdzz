@@ -12,7 +12,11 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["@zdzz/shared/global","vite/client"],
+    "types": [
+      "@zdzz/shared/global",
+      "vite/client",
+      "unplugin-vue-define-options/macros-global"
+    ],
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./types/*"]

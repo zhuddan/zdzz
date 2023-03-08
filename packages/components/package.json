@@ -14,7 +14,8 @@
     "README.md"
   ],
   "scripts": {
-    "build": "pnpm run clear && vite build",
+    "build": "pnpm run clear && vite build && pnpm run build:scss",
+    "build:scss": "esno script/buildScss",
     "version:patch": "pnpm version patch",
     "clear": "rm -rf dist es lib",
     "check:type": "vue-tsc --noEmit"
