@@ -2,5 +2,5 @@ import { createConfig } from '../../script/config';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
-  return createConfig('ZdzzHooks');
+  return createConfig('zd_hooks');
 });

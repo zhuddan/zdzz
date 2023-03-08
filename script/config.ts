@@ -4,6 +4,8 @@ import dts from 'vite-plugin-dts';
 import vuePlugin from '@vitejs/plugin-vue';
 import DefineOptions from 'unplugin-vue-define-options/vite';
 
+type PackageName = `zd_${'shared' | 'hooks' | 'components'}` ;
+
 const GLOBALS = {
   vue: 'Vue',
   'vue-router': 'VueRouter',
@@ -11,8 +13,8 @@ const GLOBALS = {
   qs: 'qs',
   'pdfjs-dist': 'pdfjsLib',
   'pdfjs-dist/legacy/build/pdf.js': 'pdfjsLib',
-  '@zdzz/shared': 'ZdzzShared',
-  '@zdzz/hooks': 'ZdzzHooks',
+  '@zdzz/shared': 'zd_shared',
+  '@zdzz/hooks': 'zd_hooks',
 };
 
 const EXTERNAL = [
@@ -50,7 +52,7 @@ const preserveModulesOutput = (moduleFormat: ModuleFormat, dir?: string) => {
 };
 
 export const createConfig = (
-  packageName: string,
+  packageName: PackageName,
   options?: Partial<{
     replacePath: boolean;
     vue: boolean;
