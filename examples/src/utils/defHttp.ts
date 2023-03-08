@@ -9,9 +9,4 @@ const transform = createRuoyiAxiosTransform({
   getToken,
   createMessage: (a, b) => createErrorMsg(b),
 });
-export const defHttp = createAxios({
-  transform,
-  requestOptions: {
-    apiUrl,
-  },
-});
+export const defHttp = createAxios(apiUrl, { transform });

@@ -1,14 +1,35 @@
-import type { UserConfig } from 'vite';
+import type { PluginOption, UserConfig } from 'vite';
 import type { ModuleFormat } from 'rollup';
 import dts from 'vite-plugin-dts';
+import vuePlugin from '@vitejs/plugin-vue';
+import DefineOptions from 'unplugin-vue-define-options/vite';
+
+const GLOBALS = {
+  vue: 'Vue',
+  'vue-router': 'VueRouter',
+  axios: 'Axios',
+  qs: 'qs',
+  'pdfjs-dist': 'pdfjsLib',
+  'pdfjs-dist/legacy/build/pdf.js': 'pdfjsLib',
+  '@zdzz/shared': 'ZdzzShared',
+  '@zdzz/hooks': 'ZdzzHooks',
+};
+
+const EXTERNAL = [
+  'vue',
+  'vue-router',
+  'qs',
+  'axios',
+  'pdfjs-dist',
+  'pdfjs-dist/build/pdf.worker.entry',
+  'pdfjs-dist/legacy/build/pdf.js',
+  '@zdzz/shared',
+  '@zdzz/hooks',
+];
+
 const baseOutput = (moduleFormat: ModuleFormat, name?: string) => {
   return {
-    globals: {
-      vue: 'Vue',
-      'vue-router': 'VueRouter',
-      axios: 'Axios',
-      qs: 'qs',
-    },
+    globals: GLOBALS,
     format: moduleFormat,
     entryFileNames: `[name]${moduleFormat === 'iife' ? '' : `.${moduleFormat}`}.js`,
     dir: 'dist',
@@ -19,12 +40,7 @@ const baseOutput = (moduleFormat: ModuleFormat, name?: string) => {
 
 const preserveModulesOutput = (moduleFormat: ModuleFormat, dir?: string) => {
   return {
-    globals: {
-      vue: 'Vue',
-      'vue-router': 'VueRouter',
-      axios: 'Axios',
-      qs: 'qs',
-    },
+    globals: GLOBALS,
     format: moduleFormat,
     entryFileNames: '[name].js',
     preserveModules: true,
@@ -33,11 +49,22 @@ const preserveModulesOutput = (moduleFormat: ModuleFormat, dir?: string) => {
   };
 };
 
-export const createConfig = (packageName: string, replacePath = false): UserConfig => {
+export const createConfig = (
+  packageName: string,
+  options?: Partial<{
+    replacePath: boolean;
+    vue: boolean;
+  }>,
+): UserConfig => {
+  const replacePath = options?.replacePath || false;
+  const isVue = options?.vue || false;
+  const basePlugins: PluginOption[] = [];
+  if (isVue) basePlugins.push(vuePlugin(), DefineOptions());
   return {
     plugins: [
+      ...basePlugins,
       dts({
-        include: ['src/**/*.ts', 'type.d.ts'],
+        include: ['src/**/*.ts', 'type.d.ts', 'src/**/*.vue'],
         outputDir: ['dist', 'es', 'lib'],
         beforeWriteFile(filePath: string, content) {
           const filePathOut = filePath
@@ -60,7 +87,7 @@ export const createConfig = (packageName: string, replacePath = false): UserConf
         entry: './src/index.ts',
       },
       rollupOptions: {
-        external: ['vue', 'vue-router', 'qs', 'axios'],
+        external: EXTERNAL,
         output: [
           // preserveModules
           preserveModulesOutput('es'),

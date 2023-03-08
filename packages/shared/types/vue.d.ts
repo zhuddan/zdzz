@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref } from 'vue';
+import type { ComputedRef, Ref, PropType as VuePropType } from 'vue';
 
 declare global{
 

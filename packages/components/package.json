@@ -1,6 +1,6 @@
 {
-  "name": "@zdzz/hooks",
-  "version": "0.0.9",
+  "name": "@zdzz/components",
+  "version": "0.0.1",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -16,13 +16,16 @@
   "scripts": {
     "build": "pnpm run clear && vite build",
     "version:patch": "pnpm version patch",
-    "clear": "rm -rf dist es lib "
+    "clear": "rm -rf dist es lib",
+    "check:type": "vue-tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zdzz/shared": "workspace:*"
+    "@zdzz/hooks": "workspace:*",
+    "@zdzz/shared": "workspace:*",
+    "pdfjs-dist": "^3.4.120"
   },
   "peerDependencies": {
     "vue": "^3.2.20"

@@ -1,0 +1,14 @@
+{
+  "include": ["src"],
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "./",
+    "outDir": "./dist",
+    "types": [
+      "@zdzz/shared/global",
+      "vite/client",
+      "unplugin-vue-define-options/macros-global"
+    ]
+  }
+}
