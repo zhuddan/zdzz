@@ -16,7 +16,7 @@ const targetDist = resolve(__dirname, '../dist');
 // src目录
 const srcDir = resolve(__dirname, '../src');
 
-const buildScss = async () => {
+const buildScss = async (minify = false) => {
   await cpy(`${sourceDir}/**/*.scss`, targetLib);
   await cpy(`${sourceDir}/**/*.scss`, targetEs);
 
@@ -30,10 +30,10 @@ const buildScss = async () => {
     const code = await sass.compileString(scssCode, {
       // 指定src下对应less文件的文件夹为目录
       loadPaths: [srcDir, dirname(filePath)],
-      style: 'compressed',
+      style: minify ? 'compressed' : 'expanded',
     });
     // 拿到.css后缀path
-    const cssPath = scssFiles[path].replace('.scss', '.css');
+    const cssPath = scssFiles[path].replace('.scss', `${minify ? '.mini.css' : '.css'}`);
     // 将css写入对应目录
     await fs.writeFile(resolve(targetLib, cssPath), code.css);
     await fs.writeFile(resolve(targetEs, cssPath), code.css);
@@ -41,3 +41,4 @@ const buildScss = async () => {
   await cpy(`${targetLib}/style*.css`, targetDist);
 };
 buildScss();
+buildScss(true);

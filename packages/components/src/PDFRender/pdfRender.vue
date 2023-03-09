@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import 'pdfjs-dist/build/pdf.worker.entry';
-import { nextTick, onMounted, ref, useSlots, watch } from 'vue';
+import { nextTick, onMounted, ref, unref, useSlots, watch } from 'vue';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.js';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.js';
 import { sleep } from '@zdzz/shared';
-// import './style/index.scss';
-
 const props = defineProps({
   url: {
     type: String,
@@ -21,19 +19,23 @@ const numPages = ref(0);
 const loading = ref(false);
 const isError = ref(false);
 const errorMsg = ref('');
+
+let pdfDoc: Nullable<PDFDocumentProxy> = (null);
 async function update() {
-  const loadingTask = getDocument(props.url);
+  if (!props.url) return;
   loading.value = true;
   isError.value = false;
+  const loadingTask = getDocument(props.url);
   loadingTask.promise
     .then(async (pdf) => {
+      pdfDoc = pdf;
       for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
         numPages.value = pageNum;
         await nextTick();
         if (canvasRef.value && canvasRef.value.length) {
           // 每10页休息一下，避免页面卡顿
-          if (pageNum % 10 == 0)
-            await sleep();
+          if (pageNum % 10 == 0) await sleep();
+          console.log(pageNum);
           await render(pdf, pageNum);
         }
       }
@@ -50,6 +52,7 @@ async function update() {
 }
 
 async function render(pdf: PDFDocumentProxy, pageNum: number) {
+  await nextTick();
   const canvas = canvasRef.value![pageNum - 1] as HTMLCanvasElement;
   const page = await pdf.getPage(pageNum);
   // 解决页面显示太模糊的问题
@@ -65,18 +68,28 @@ async function render(pdf: PDFDocumentProxy, pageNum: number) {
   page.render(renderContext as any);
 }
 
+async function handleRender() {
+  await nextTick();
+  if (!pdfDoc) return;
+  for (let index = 0; index < 1; index++) {
+    numPages.value ++;
+    await render(pdfDoc, numPages.value);
+  }
+}
 watch(() => props.url, update, { immediate: true });
 defineExpose({
   update,
 });
-const slot = useSlots();
-onMounted(() => {
-  console.log(slot);
+const pdfRenderRef = ref<Nullable<HTMLElement>>(null);
+onMounted(async () => {
+
 });
+
+const slot = useSlots();
 </script>
 
 <template>
-  <div :class="[loading]" class="pdf-view">
+  <div ref="pdfRenderRef" :class="[loading]" class="pdf-render">
     <template v-if="!isError">
       <div v-for="item in numPages" :key="item" class="pdf-pages-wrapper">
         <canvas ref="canvasRef"></canvas>

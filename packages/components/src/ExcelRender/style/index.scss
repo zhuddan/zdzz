@@ -1,0 +1,22 @@
+/* stylelint-disable import-notation */
+@import '../../common.scss';
+
+.excel_view {
+  .excel_view_wrap {
+    min-height: 300px;
+
+    table {
+      border: 1px solid;
+      border-collapse: collapse;
+      min-width: 100%;
+
+      td {
+        border: 1px solid #72767b;
+        font-size: 12px;
+        padding: 10px;
+        text-align: center;
+        color: #000;
+      }
+    }
+  }
+}

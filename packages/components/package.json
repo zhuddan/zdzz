@@ -24,11 +24,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/xlsx": "^0.0.36",
     "@zdzz/hooks": "workspace:*",
     "@zdzz/shared": "workspace:*",
-    "pdfjs-dist": "2.13.216"
+    "pdfjs-dist": "2.13.216",
+    "scrollparent": "^2.0.1",
+    "xlsx": "^0.18.5"
   },
   "peerDependencies": {
     "vue": "^3.2.20"
+  },
+  "devDependencies": {
+    "@types/scrollparent": "^2.0.1"
   }
 }
