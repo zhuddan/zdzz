@@ -1,6 +1,7 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from '../../cloneDeep';
+
 import qs from 'qs';
 import { ContentTypeEnum, RequestEnum } from '../types/enum';
 import { isFunction } from '../../is';

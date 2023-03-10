@@ -1,5 +1,6 @@
 export type formatData = Record<string, any>;
-import { merge } from 'lodash-es';
+import { merge } from '../merge';
+
 import { defaultFormatDictOptions } from './config';
 import type { FormatOptions } from './typings';
 export function format<T extends formatData = formatData>(

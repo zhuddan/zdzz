@@ -3,7 +3,7 @@ import { DictBase } from './DictBase';
 import { DictMeta } from './DictMeta';
 import type { DictDataLike as DL, DictValue as DV, DictBaseOptions, DictData, DictDataListRecord, DictDataLoadingRecord, FormatOptions, LoadDict } from './typings';
 import { defaultFormatDictOptions } from './config';
-import { merge } from 'lodash-es';
+import { merge } from '../merge';
 import { format } from './format';
 export class Dict<DT extends string = string> extends DictBase {
   dictTypes: DT[];

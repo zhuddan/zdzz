@@ -139,17 +139,30 @@ importers:
 
   packages/hooks:
     specifiers:
+      '@types/viewerjs': ^1.0.2
       '@zdzz/shared': workspace:*
+      viewerjs: ^1.11.3
       vue: ^3.2.20
     dependencies:
       '@zdzz/shared': link:../shared
+      viewerjs: 1.11.3
       vue: 3.2.47
+    devDependencies:
+      '@types/viewerjs': 1.0.2
 
   packages/shared:
     specifiers:
+      '@types/file-saver': ^2.0.5
+      '@types/lodash-es': ^4.17.6
       axios: ^1.3.4
+      file-saver: ^2.0.5
+      lodash-es: ^4.17.21
     dependencies:
+      '@types/file-saver': 2.0.5
+      '@types/lodash-es': 4.17.6
       axios: 1.3.4
+      file-saver: 2.0.5
+      lodash-es: 4.17.21
 
 packages:
 
@@ -852,6 +865,10 @@ packages:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
+  /@types/file-saver/2.0.5:
+    resolution: {integrity: sha512-zv9kNf3keYegP5oThGLaPk8E081DFDuwfqjtiTzm6PoxChdJ1raSuADf2YGCVIyrSynLrgc8JWv296s7Q7pQSQ==}
+    dev: false
+
   /@types/is-ci/3.0.0:
     resolution: {integrity: sha512-Q0Op0hdWbYd1iahB+IFNQcWXFq4O0Q5MwQP7uN0souuQ4rPg1vEYcnIOfr1gY+M+6rc8FGoRaBO1mOOvL29sEQ==}
     dependencies:
@@ -876,11 +893,9 @@ packages:
     resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
     dependencies:
       '@types/lodash': 4.14.191
-    dev: true
 
   /@types/lodash/4.14.191:
     resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
-    dev: true
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
@@ -918,6 +933,13 @@ packages:
     resolution: {integrity: sha512-l4cmyPEckf8moNYHdJ+4wkHvFxjyW6ulm9l4YGaOxeyBWPhBOT0gvni1InpFPdzx1dKf/2s62qGITwxNWnPQng==}
     dependencies:
       '@types/node': 12.20.55
+    dev: true
+
+  /@types/viewerjs/1.0.2:
+    resolution: {integrity: sha512-IQj7e29b6gRpkXbj8H5l0TlHsrCQP+YasYozr85aLX4No4UJgvthHUYbzFkSPUZdcNEKRCIJY+7rR4DTfC0AQw==}
+    deprecated: This is a stub types definition. viewerjs provides its own type definitions, so you do not need this installed.
+    dependencies:
+      viewerjs: 1.11.3
     dev: true
 
   /@types/xlsx/0.0.36:
@@ -2679,6 +2701,10 @@ packages:
     dependencies:
       flat-cache: 3.0.4
     dev: true
+
+  /file-saver/2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
+    dev: false
 
   /fill-range/4.0.0:
     resolution: {integrity: sha512-VcpLTWqWDiTerugjj8e3+esbg+skS3M9e54UuR3iCeIDMXCLTsAH8hTSzDQU/X6/6t3eYkOKoZSef2PlU6U1XQ==}
@@ -5494,6 +5520,9 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /viewerjs/1.11.3:
+    resolution: {integrity: sha512-efG3U61Umuj/1x6JAtdvnY9m407C/RkrkFilsMcLEWKDivpjNU3/FeL+feCY1Vkur9aQeBJ+z6K4CCPP7hv6vA==}
 
   /vite-plugin-build/0.7.1_svelte@3.56.0:
     resolution: {integrity: sha512-IbJQ/U5WU2DiOfHbJbCqcGOytZRWYSbVB2YRPubIJGOV09fAx6S/yolPmsjgxO/H8mvF0a3oEZQWIJSujHAp0Q==}

@@ -5,7 +5,7 @@ import type { RequestOptions, Result } from '../types';
 import type { AxiosTransform, CreateAxiosTransform } from '../core/axiosTransform';
 import { checkStatus } from '../core/checkStatus';
 import { formatRequestDate, joinTimestamp } from '../core/helper';
-import { setObjToUrlParams } from '../utils';
+import { setObjToUrlParams } from '../../setObjToUrlParams';
 
 export const createRuoyiAxiosTransform: CreateAxiosTransform = (
   { createMessage, getToken, removeToken, signoutHandler } = {},
@@ -44,7 +44,6 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
       // 在此处根据自己项目的实际情况对不同的code执行不同的操作
       // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
       let errorMsg = '';
-      // const userStore = useUserStore();
       switch (code) {
         case ResultEnum.TIMEOUT:
           errorMsg = '登录超时,请重新登录!';
@@ -58,8 +57,8 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
             errorMsg = '未知错误';
       }
 
-      createMessage?.(options.errorMessageMode, errorMsg);
-      throw new Error(errorMsg || '请求出错，请稍候重试');
+      return createMessage?.(options.errorMessageMode, errorMsg);
+      // throw new Error(errorMsg || '请求出错，请稍候重试');
     },
 
     // 请求之前处理config

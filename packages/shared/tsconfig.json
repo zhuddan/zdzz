@@ -5,6 +5,7 @@
     "baseUrl": "./",
     "rootDir": "./",
     "noEmit": true,
+    "suppressImplicitAnyIndexErrors":true,
     "types": ["@zdzz/shared/global"]
   }
 }

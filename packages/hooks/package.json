@@ -22,9 +22,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zdzz/shared": "workspace:*"
+    "@zdzz/shared": "workspace:*",
+    "viewerjs": "^1.11.3"
   },
   "peerDependencies": {
     "vue": "^3.2.20"
+  },
+  "devDependencies": {
+    "@types/viewerjs": "^1.0.2"
   }
 }
