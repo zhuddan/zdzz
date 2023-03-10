@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import type { PDFRenderInstance } from '../../../../../packages/components/src/PDFRender';
-import { PDFRender } from '../../../../../packages/components/src/PDFRender';
-import { ExcelRender } from '../../../../../packages/components/src/ExcelRender';
-import '../../../../../packages/components/src/style.scss';
-import { onMounted, ref } from 'vue';
-onMounted(() => {
-});
+import type { ExcelRenderInstance } from '@zdzz/components';
+import { ExcelRender, Icon } from '@zdzz/components';
+import '@zdzz/components/es/style.scss';
+import { ref } from 'vue';
 
 function handleError(e: string) {
   console.log(e);
 }
+const excelRef = ref<Nullable<ExcelRenderInstance>>(null);
 </script>
 
 <template>
   <div class="">
-    <ExcelRender url="/a.xls" />
-    <ExcelRender url="/l.pdf" @error="handleError" />
-    <!-- <PDFRender ref="pdfViewRef" url="/a.pdf" /> -->
+    <!-- <ExcelRender url="/a.xls" /> -->
+    <!-- <ExcelRender ref="excelRef" url="/l.pdf" @error="handleError" /> -->
+    <Icon icon="vue.svg" />
+    <Icon icon="ep:plus" color="red" :size="120" />
   </div>
 </template>
 

@@ -4,7 +4,7 @@ import dts from 'vite-plugin-dts';
 import vuePlugin from '@vitejs/plugin-vue';
 import DefineOptions from 'unplugin-vue-define-options/vite';
 type PackageName = `zd_${'shared' | 'hooks' | 'components'}` ;
-dts;
+
 const GLOBALS = {
   vue: 'Vue',
   'vue-router': 'VueRouter',
@@ -14,6 +14,7 @@ const GLOBALS = {
   'pdfjs-dist/legacy/build/pdf.js': 'pdfjsLib',
   '@zdzz/shared': 'zd_shared',
   '@zdzz/hooks': 'zd_hooks',
+  xlsx: 'XLSX',
 };
 
 const EXTERNAL = [
@@ -27,6 +28,7 @@ const EXTERNAL = [
   '@zdzz/shared',
   '@zdzz/hooks',
   /\.scss/,
+  'xlsx',
 ];
 
 export function distOutput(moduleFormat: ModuleFormat, name?: string): OutputOptions {
@@ -50,25 +52,43 @@ export function preserveModulesOutput(format: ModuleFormat, dir?: string): Outpu
     preserveModulesRoot: 'src',
   };
 }
-
+type OutputType = 'dist' | 'es' | 'lib';
 export const createConfig = (
   packageName: PackageName,
   options?: Partial<{
     replacePath: boolean;
     vue: boolean;
+    output: OutputType[];
+    plugins: PluginOption[];
   }>,
 ): UserConfig => {
   const replacePath = options?.replacePath || false;
+
+  const output = options?.output || ['dist', 'es', 'lib'];
+  const outputOptions: OutputOptions[] = [];
+  if (output.includes('dist')) {
+    outputOptions.push(
+      distOutput('iife', packageName),
+      distOutput('es'),
+      distOutput('cjs'),
+    );
+  }
+
+  if (output.includes('es'))
+    outputOptions.push(preserveModulesOutput('es'));
+
+  if (output.includes('lib'))
+    outputOptions.push(preserveModulesOutput('cjs', 'lib'));
+
   const isVue = options?.vue || false;
   const basePlugins: PluginOption[] = [];
   if (isVue) basePlugins.push(vuePlugin(), DefineOptions());
-
   return {
     plugins: [
       ...basePlugins,
       dts({
         include: ['src/**/*.ts', 'type.d.ts', 'src/**/*.vue'],
-        outputDir: ['dist', 'es', 'lib'],
+        outputDir: output,
         beforeWriteFile(filePath: string, content) {
           const filePathOut = filePath
             .replace(/dist\/src\//, 'dist/')
@@ -80,6 +100,7 @@ export const createConfig = (
           };
         },
       }),
+      ...(options?.plugins || []),
     ],
     build: {
       // target: 'es2015',
@@ -92,15 +113,7 @@ export const createConfig = (
       },
       rollupOptions: {
         external: EXTERNAL,
-        output: [
-          // preserveModules
-          preserveModulesOutput('es'),
-          preserveModulesOutput('cjs', 'lib'),
-          // dist
-          distOutput('iife', packageName),
-          distOutput('es'),
-          distOutput('cjs'),
-        ],
+        output: outputOptions,
       },
     },
   };

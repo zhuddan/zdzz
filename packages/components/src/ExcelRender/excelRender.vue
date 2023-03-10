@@ -1,19 +1,22 @@
 <script lang="ts" setup>
 import axios from 'axios';
 import * as XLSX from 'xlsx';
-import { nextTick, ref, useSlots, watch } from 'vue';
+import { nextTick, onMounted, ref, useSlots, watch } from 'vue';
+import { ErrorRender } from '../ErrorRender';
 const props = defineProps({
   url: {
     type: String,
     default: '',
   },
 });
-
 const emit = defineEmits(['error']);
+defineOptions({
+  name: 'ExcelRender',
+});
+const slots = useSlots();
 
 const loading = ref(false);
 const tableau = ref('');
-
 const isError = ref(false);
 const errorMsg = ref('');
 function update() {
@@ -92,12 +95,12 @@ function fixTable() {
   }
 }
 watch(() => props.url, update, { immediate: true });
-
-// function handleChange(e: Event) {
-//   const input = e.target as HTMLInputElement;
-//   console.log(input.files?.[0].type);
-// }
-const slot = useSlots();
+onMounted(() => {
+  console.log(slots);
+});
+defineExpose({
+  update,
+});
 </script>
 
 <template>
@@ -106,24 +109,17 @@ const slot = useSlots();
       <div class="excel-render-wrap" v-html="tableau">
       </div>
     </template>
-    <div
-      v-else
-      class="error-wrap"
-    >
-      <div v-if="slot?.error">
+    <template v-if="slots.default">
+      <slot></slot>
+    </template>
+    <ErrorRender v-else :is-error="isError" :error-msg="errorMsg" @refresh="update">
+      <template v-if="slots.error" #error>
         <slot name="error"></slot>
-      </div>
-
-      <template v-else>
-        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon-error"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm0 393.664L407.936 353.6a38.4 38.4 0 1 0-54.336 54.336L457.664 512 353.6 616.064a38.4 38.4 0 1 0 54.336 54.336L512 566.336 616.064 670.4a38.4 38.4 0 1 0 54.336-54.336L566.336 512 670.4 407.936a38.4 38.4 0 1 0-54.336-54.336L512 457.664z" /></svg>
-        <p>
-          {{ errorMsg }}
-        </p>
       </template>
-      <button class="refresh-btn" @click="update">
-        刷新
-      </button>
-    </div>
+      <template v-if="slots['refresh-btn']" #refresh-btn>
+        <slot name="refresh-btn"></slot>
+      </template>
+    </ErrorRender>
   </div>
 </template>
 

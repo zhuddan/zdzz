@@ -24,17 +24,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/xlsx": "^0.0.36",
+    "@iconify/iconify": "^3.1.0",
     "@zdzz/hooks": "workspace:*",
     "@zdzz/shared": "workspace:*",
     "pdfjs-dist": "2.13.216",
-    "scrollparent": "^2.0.1",
     "xlsx": "^0.18.5"
   },
-  "peerDependencies": {
-    "vue": "^3.2.20"
-  },
   "devDependencies": {
-    "@types/scrollparent": "^2.0.1"
+    "@iconify/json": "^2.2.32",
+    "@purge-icons/generated": "^0.9.0",
+    "@types/xlsx": "^0.0.36"
+  },
+  "peerDependencies": {
+    "pdfjs-dist": "2.13.216",
+    "vue": "^3.2.20",
+    "xlsx": "^0.18.5"
   }
 }

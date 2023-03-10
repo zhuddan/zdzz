@@ -13,6 +13,7 @@ const targetLib = resolve(__dirname, '../lib');
 const targetEs = resolve(__dirname, '../es');
 // dist文件
 const targetDist = resolve(__dirname, '../dist');
+targetDist;
 // src目录
 const srcDir = resolve(__dirname, '../src');
 
@@ -43,7 +44,7 @@ const buildScss = async (minify = false) => {
     await fs.writeFile(resolve(targetLib, cssPath), code.css);
     await fs.writeFile(resolve(targetEs, cssPath), code.css);
   }
-  await cpy(`${targetLib}/style*.css`, targetDist);
+  // await cpy(`${targetLib}/style*.css`, targetDist);
 };
 buildScss();
 buildScss(true);

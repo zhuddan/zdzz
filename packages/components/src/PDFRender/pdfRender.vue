@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import 'pdfjs-dist/build/pdf.worker.entry';
-import { nextTick, onMounted, ref, unref, useSlots, watch } from 'vue';
+import { nextTick, ref, useSlots, watch } from 'vue';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.js';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.js';
 import { sleep } from '@zdzz/shared';
@@ -13,7 +13,7 @@ const props = defineProps({
 const emit = defineEmits(['error']);
 
 defineOptions({
-  name: 'PdfView',
+  name: 'PdfRender',
 });
 
 const canvasRef = ref<Array<HTMLCanvasElement>>();
@@ -21,8 +21,8 @@ const numPages = ref(0);
 const loading = ref(false);
 const isError = ref(false);
 const errorMsg = ref('');
-const slot = useSlots();
-let pdfDoc: Nullable<PDFDocumentProxy> = (null);
+const slots = useSlots();
+// let pdfDoc: Nullable<PDFDocumentProxy> = (null);
 async function update() {
   if (!props.url) return;
   loading.value = true;
@@ -30,7 +30,7 @@ async function update() {
   const loadingTask = getDocument(props.url);
   loadingTask.promise
     .then(async (pdf) => {
-      pdfDoc = pdf;
+      // pdfDoc = pdf;
       for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
         numPages.value = pageNum;
         await nextTick();
@@ -83,24 +83,14 @@ defineExpose({
         <canvas ref="canvasRef"></canvas>
       </div>
     </template>
-    <div
-      v-else
-      class="error-wrap"
-    >
-      <div v-if="slot?.error">
+    <ErrorRender v-else :is-error="isError" :error-msg="errorMsg" @refresh="update">
+      <template v-if="slots.error" #error>
         <slot name="error"></slot>
-      </div>
-
-      <template v-else>
-        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon-error"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm0 393.664L407.936 353.6a38.4 38.4 0 1 0-54.336 54.336L457.664 512 353.6 616.064a38.4 38.4 0 1 0 54.336 54.336L512 566.336 616.064 670.4a38.4 38.4 0 1 0 54.336-54.336L566.336 512 670.4 407.936a38.4 38.4 0 1 0-54.336-54.336L512 457.664z" /></svg>
-        <p>
-          {{ errorMsg }}
-        </p>
       </template>
-      <button class="refresh-btn" @click="update">
-        刷新
-      </button>
-    </div>
+      <template v-if="slots['refresh-btn']" #refresh-btn>
+        <slot name="refresh-btn"></slot>
+      </template>
+    </ErrorRender>
   </div>
 </template>
 

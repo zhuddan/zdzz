@@ -1,4 +1,4 @@
-.error-wrap{
+.error-render{
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -7,6 +7,7 @@
   align-items: center;
   padding: 10vh 0;
 
+  img,
   svg{
     width: 64px;
     height: 64px;
