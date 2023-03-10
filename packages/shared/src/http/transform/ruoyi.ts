@@ -5,7 +5,7 @@ import type { RequestOptions, Result } from '../types';
 import type { AxiosTransform, CreateAxiosTransform } from '../core/axiosTransform';
 import { checkStatus } from '../core/checkStatus';
 import { formatRequestDate, joinTimestamp } from '../core/helper';
-import { setObjToUrlParams } from '../../setObjToUrlParams';
+import { setParams } from '../../setParams';
 
 export const createRuoyiAxiosTransform: CreateAxiosTransform = (
   { createMessage, getToken, removeToken, signoutHandler } = {},
@@ -97,7 +97,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
             config.params = undefined;
           }
           if (joinParamsToUrl)
-            config.url = setObjToUrlParams(config.url as string, Object.assign({}, config.params, config.data));
+            config.url = setParams(config.url as string, Object.assign({}, config.params, config.data));
         }
         else {
           // 兼容restful风格
