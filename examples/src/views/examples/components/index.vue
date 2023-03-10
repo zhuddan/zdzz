@@ -6,12 +6,16 @@ import '../../../../../packages/components/src/style.scss';
 import { onMounted, ref } from 'vue';
 onMounted(() => {
 });
+
+function handleError(e: string) {
+  console.log(e);
+}
 </script>
 
 <template>
   <div class="">
     <ExcelRender url="/a.xls" />
-    <ExcelRender url="/l.pdf" />
+    <ExcelRender url="/l.pdf" @error="handleError" />
     <!-- <PDFRender ref="pdfViewRef" url="/a.pdf" /> -->
   </div>
 </template>

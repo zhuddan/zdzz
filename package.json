@@ -4,6 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
+    "build:scss": "pnpm --filter=@zdzz/components run build:scss",
     "build:components": "pnpm --filter=@zdzz/components run build",
     "reload": "pnpm run build:components && pnpm run dev",
     "dev": "pnpm --filter ./examples run dev",

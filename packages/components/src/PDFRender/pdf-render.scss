@@ -1,5 +1,4 @@
-/* stylelint-disable import-notation */
-@import '../../common.scss';
+@use '../common.scss';
 
 .pdf-render{
   min-height: 300px;

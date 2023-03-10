@@ -1,8 +1,7 @@
-/* stylelint-disable import-notation */
-@import '../../common.scss';
+@use '../common.scss';
 
-.excel_view {
-  .excel_view_wrap {
+.excel-render {
+  .excel-render-wrap {
     min-height: 300px;
 
     table {

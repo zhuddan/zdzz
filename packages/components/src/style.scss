@@ -1,3 +1,2 @@
-/* stylelint-disable import-notation */
-@import './PDFRender/style/index.scss';
-@import './ExcelRender/style/index.scss';
+@use './PDFRender/pdf-render.scss';
+@use './ExcelRender/excel-render.scss';

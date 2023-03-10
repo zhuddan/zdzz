@@ -31,6 +31,11 @@ const buildScss = async (minify = false) => {
       // 指定src下对应less文件的文件夹为目录
       loadPaths: [srcDir, dirname(filePath)],
       style: minify ? 'compressed' : 'expanded',
+      // importer: {
+      //   findFileUrl(url) { // This works as expected.
+      //     return new URL(url.substring(1), srcDir);
+      //   },
+      // },
     });
     // 拿到.css后缀path
     const cssPath = scssFiles[path].replace('.scss', `${minify ? '.mini.css' : '.css'}`);

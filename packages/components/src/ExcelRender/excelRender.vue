@@ -2,13 +2,14 @@
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { nextTick, ref, useSlots, watch } from 'vue';
-
 const props = defineProps({
   url: {
     type: String,
     default: '',
   },
 });
+
+const emit = defineEmits(['error']);
 
 const loading = ref(false);
 const tableau = ref('');
@@ -37,9 +38,11 @@ function update() {
               try {
                 const data = JSON.parse(reader.result as string);
                 errorMsg.value = data.msg;
+                emit('error', errorMsg.value);
               }
               catch (error) {
                 errorMsg.value = `${props.url} 格式不正确`;
+                emit('error', errorMsg.value);
               }
             };
           }
@@ -56,12 +59,13 @@ function update() {
       catch (error) {
         isError.value = true;
         errorMsg.value = String(error);
+        emit('error', errorMsg.value);
       }
     })
     .catch((err) => {
       isError.value = true;
       errorMsg.value = String(err);
-      console.log(['try error 3']);
+      emit('error', errorMsg.value);
     })
     .finally(() => {
       loading.value = false;
@@ -97,9 +101,9 @@ const slot = useSlots();
 </script>
 
 <template>
-  <div element-loading-text="加载中..." class="excel_view">
+  <div class="excel-render">
     <template v-if="!isError">
-      <div class="excel_view_wrap" v-html="tableau">
+      <div class="excel-render-wrap" v-html="tableau">
       </div>
     </template>
     <div

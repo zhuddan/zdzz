@@ -10,6 +10,8 @@ const props = defineProps({
     default: '',
   },
 });
+const emit = defineEmits(['error']);
+
 defineOptions({
   name: 'PdfView',
 });
@@ -19,7 +21,7 @@ const numPages = ref(0);
 const loading = ref(false);
 const isError = ref(false);
 const errorMsg = ref('');
-
+const slot = useSlots();
 let pdfDoc: Nullable<PDFDocumentProxy> = (null);
 async function update() {
   if (!props.url) return;
@@ -41,10 +43,10 @@ async function update() {
       }
     })
     .catch((e) => {
-      console.log(e);
       errorMsg.value = e.message.replace('Missing PDF', '找不到PDF');
       isError.value = true;
       numPages.value = 0;
+      emit('error', errorMsg.value);
     }).
     finally(() => {
       loading.value = false;
@@ -68,28 +70,14 @@ async function render(pdf: PDFDocumentProxy, pageNum: number) {
   page.render(renderContext as any);
 }
 
-async function handleRender() {
-  await nextTick();
-  if (!pdfDoc) return;
-  for (let index = 0; index < 1; index++) {
-    numPages.value ++;
-    await render(pdfDoc, numPages.value);
-  }
-}
 watch(() => props.url, update, { immediate: true });
 defineExpose({
   update,
 });
-const pdfRenderRef = ref<Nullable<HTMLElement>>(null);
-onMounted(async () => {
-
-});
-
-const slot = useSlots();
 </script>
 
 <template>
-  <div ref="pdfRenderRef" :class="[loading]" class="pdf-render">
+  <div :class="[loading]" class="pdf-render">
     <template v-if="!isError">
       <div v-for="item in numPages" :key="item" class="pdf-pages-wrapper">
         <canvas ref="canvasRef"></canvas>
