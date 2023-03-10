@@ -1,6 +1,6 @@
 {
   "name": "@zdzz/components",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -11,7 +11,8 @@
     "lib",
     "es",
     "package.json",
-    "README.md"
+    "README.md",
+    "components.d.ts"
   ],
   "scripts": {
     "build": "pnpm run clear && vite build && pnpm run build:scss",
