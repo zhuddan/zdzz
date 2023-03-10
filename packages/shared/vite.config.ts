@@ -3,6 +3,6 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
   return createConfig('zd_shared', {
-    replacePath: true,
+    replacePath: false,
   });
 });

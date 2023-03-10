@@ -103,7 +103,6 @@ export const createConfig = (
       ...(options?.plugins || []),
     ],
     build: {
-      // target: 'es2015',
       target: 'modules',
       cssCodeSplit: true,
       minify: true,
