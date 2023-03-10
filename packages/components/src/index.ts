@@ -1,10 +1,8 @@
-export type { ExcelRenderInstance } from './ExcelRender';
-export type { PDFRenderInstance } from './PDFRender';
-
-import { ExcelRender } from './ExcelRender';
-import { Icon, SvgIcon } from './Icon';
-import { PDFRender } from './PDFRender';
-
-export { ExcelRender, Icon, PDFRender, SvgIcon };
-
-export default [ExcelRender, Icon, SvgIcon, PDFRender];
+import components from './components';
+export * from './components';
+import type { App } from 'vue';
+export default {
+  install: (app: App) => {
+    components.forEach(c => app.use(c));
+  },
+};

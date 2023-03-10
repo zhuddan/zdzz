@@ -12,7 +12,7 @@
     "es",
     "package.json",
     "README.md",
-    "components.d.ts"
+    "global.d.d.ts"
   ],
   "scripts": {
     "build": "pnpm run clear && vite build && pnpm run build:scss",
@@ -24,6 +24,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs"
+    },
+    "./global": {
+      "types": "./global.d.ts"
+    },
+    "./dist/*": "./dist/*",
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*"
+  },
   "dependencies": {
     "@iconify/iconify": "^3.1.0",
     "@zdzz/hooks": "workspace:*",

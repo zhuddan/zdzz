@@ -15,6 +15,7 @@
     "types": [
       "@zdzz/shared/global",
       "vite/client",
+      "@zdzz/components/global",
       "unplugin-vue-define-options/macros-global"
     ],
     "paths": {

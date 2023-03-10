@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig(() => {
   return createConfig('zd_components', {
     vue: true,
-    output: ['es', 'lib'],
+    // output: ['es', 'lib'],
     plugins: [
     ],
   });
