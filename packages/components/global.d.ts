@@ -1,4 +1,4 @@
-import type * as components from './src';
+import type * as components from './es';
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ExcelRender: typeof components.ExcelRender;
