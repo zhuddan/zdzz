@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { ExcelRenderInstance } from '@zdzz/components';
 // import { ExcelRender, Icon } from '@zdzz/components';
+import { PDFRenderInstance } from '@zdzz/components';
 import '@zdzz/components/es/style.css';
+
 // import { ref } from 'vue';
 import { download } from '@zdzz/shared';
 function handleError(e: string) {
