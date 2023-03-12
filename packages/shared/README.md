@@ -1,5 +1,7 @@
 # 共享工具类
 
+一个共享工具类包，包含了常见的数据类型判断、工具函数、业务工具
+
 ## 基础工具
 
 1. 数据类型判断
@@ -46,40 +48,37 @@
 
 ## 业务相关
 
-
-
 1. cache
 
 ```ts
-import { WebCache } from '@zdzz/shared';
-import { name, version } from '../../package.json';
-type WebCacheEnum = 'Token';
+import { WebCache } from "@zdzz/shared";
+import { name, version } from "../../package.json";
+type WebCacheEnum = "Token";
 const webCache = new WebCache<WebCacheEnum>({
   projectName: name,
   projectVersion: version,
 });
 
 export function setToken(token: string) {
-  webCache.set('Token', token);
+  webCache.set("Token", token);
 }
 
 export function getToken() {
-  return webCache.get<string>('Token');
+  return webCache.get<string>("Token");
 }
 
 export function removeToken() {
-  webCache.remove('Token');
+  webCache.remove("Token");
 }
-
 ```
 
 2. http
 
-``` ts
-import { createAxios, createRuoyiAxiosTransform } from '@zdzz/shared';
-import { getToken, removeToken } from '@/utils/cache';
-import { useMessage } from '@/hooks/useMessage';
-const apiUrl = '***';
+```ts
+import { createAxios, createRuoyiAxiosTransform } from "@zdzz/shared";
+import { getToken, removeToken } from "@/utils/cache";
+import { useMessage } from "@/hooks/useMessage";
+const apiUrl = "***";
 
 const { createErrorMsg } = useMessage();
 const transform = createRuoyiAxiosTransform({
@@ -88,41 +87,48 @@ const transform = createRuoyiAxiosTransform({
   createMessage: (a, b) => createErrorMsg(b),
 });
 export const defHttp = createAxios(apiUrl, { transform });
-
 ```
-
 
 3. dict
 
-```ts 
-import type { DictBaseOptions, DictDataListRecord, DictDataLoadingRecord, LoadDict, OriginDictData } from '@zdzz/shared';
-import { computed, toRefs, unref } from 'vue';
-import { defHttp } from '@/utils/defHttp';
-import { Dict } from '@zdzz/shared';
+```ts
+import type {
+  DictBaseOptions,
+  DictDataListRecord,
+  DictDataLoadingRecord,
+  LoadDict,
+  OriginDictData,
+} from "@zdzz/shared";
+import { computed, toRefs, unref } from "vue";
+import { defHttp } from "@/utils/defHttp";
+import { Dict } from "@zdzz/shared";
 export type DictTypes =
-| 'sys_user_sex'
-| 'sys_normal_disable'
-| 'sys_notice_type';
+  | "sys_user_sex"
+  | "sys_normal_disable"
+  | "sys_notice_type";
 
 const getDicts: LoadDict<DictTypes> = (dictType) => {
   return new Promise<OriginDictData[]>((resolve, reject) => {
     defHttp
-      .get<ResponseData<OriginDictData[]>>({
-        url: `/api/sys/type/${dictType}`,
-      }, {
-        withToken: false,
-        ignoreCancelToken: true,
-      })
+      .get<ResponseData<OriginDictData[]>>(
+        {
+          url: `/api/sys/type/${dictType}`,
+        },
+        {
+          withToken: false,
+          ignoreCancelToken: true,
+        }
+      )
       .then((res) => {
         if (!res.data) {
           reject(
-            `[Dictionary error] Get dictionary data \`${dictType}\` with null.Please check your dictionary key with \`${dictType}\`.`,
+            `[Dictionary error] Get dictionary data \`${dictType}\` with null.Please check your dictionary key with \`${dictType}\`.`
           );
-        }
-        else {
+        } else {
           resolve(res.data);
         }
-      }).catch((e) => {
+      })
+      .catch((e) => {
         reject(e);
       });
   });
@@ -133,14 +139,17 @@ interface BaseDicts<DT extends string, F, L> {
   format: F; // typeof format;
   load: L; // typeof load;
 }
-export function useDicts<DT extends DictTypes = DictTypes>(dts: DT[], options: Partial<DictBaseOptions> = {}) {
+export function useDicts<DT extends DictTypes = DictTypes>(
+  dts: DT[],
+  options: Partial<DictBaseOptions> = {}
+) {
   const dict = new Dict<DT>(dts, getDicts, options);
   // debug
   Dict.debug = true;
   const format = dict.format.bind(dict);
   const load = dict.load.bind(dict);
-  const dicts = computed (() => dict.data.value);
-  const dictsLoading = computed (() => dict.loading.value);
+  const dicts = computed(() => dict.data.value);
+  const dictsLoading = computed(() => dict.loading.value);
   const useRuoyiDictsReturn = {
     format,
     load,
@@ -150,10 +159,9 @@ export function useDicts<DT extends DictTypes = DictTypes>(dts: DT[], options: P
     ...toRefs(unref(dict.loading)),
   };
 
-  type UseRuoyiDictsReturn = RecordRef<DictDataListRecord<DT>>
-  & RecordRef<DictDataLoadingRecord<DT>>
-  & BaseDicts<DT, typeof format, typeof load>;
+  type UseRuoyiDictsReturn = RecordRef<DictDataListRecord<DT>> &
+    RecordRef<DictDataLoadingRecord<DT>> &
+    BaseDicts<DT, typeof format, typeof load>;
   return useRuoyiDictsReturn as unknown as UseRuoyiDictsReturn;
 }
-
 ```
