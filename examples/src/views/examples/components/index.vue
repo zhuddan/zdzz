@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ExcelRenderInstance } from '@zdzz/components';
-// import { ExcelRender, Icon } from '@zdzz/components';
-import { PDFRenderInstance } from '@zdzz/components';
+import { ExcelRender } from '../../../../../packages/components/src/ExcelRender';
+
 import '@zdzz/components/es/style.css';
 
 // import { ref } from 'vue';
@@ -21,13 +21,25 @@ function handleDownload() {
 
 <template>
   <div class="">
-    <!-- <ExcelRender url="/a.xls" /> -->
-    <ExcelRender ref="excelRef" url="/l.pdf" @error="handleError" />
+    <ExcelRender url="/2a.xls">
+      <!-- <template #default="{ error }">
+        {{ error }}
+      </template> -->
+      <template #error="{ errorMsg }">
+        {{ errorMsg }}
+      </template>
+      <template #refresh-btn="{ update }">
+        <button @click="update">
+          update
+        </button>
+      </template>
+    </ExcelRender>
+    <!-- <ExcelRender ref="excelRef" url="/l.pdf" @error="handleError" />
     <Icon icon="vue.svg" />
     <Icon icon="ep:plus" color="red" :size="120" />
     <button @click="handleDownload">
       handleDownload
-    </button>
+    </button> -->
   </div>
 </template>
 

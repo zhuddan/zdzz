@@ -1,18 +1,10 @@
 <script setup lang="ts">
-import { isDate, isDef, isEmpty, isNull, isNumber, isObject, isPromise, isUnDef } from '@zdzz/shared';
+import { isDate, isEmpty, isNull, isNumber, isObject, isPromise, isUnDef } from '@zdzz/shared';
 import { nextTick } from 'vue';
 const list: {
   input: string;
   result: boolean;
 }[] = [
-  {
-    input: 'isDef()',
-    result: isDef(),
-  },
-  {
-    input: 'isDef(1)',
-    result: isDef(1),
-  },
   {
     input: 'isUnDef()',
     result: isUnDef(),

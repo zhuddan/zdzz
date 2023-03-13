@@ -12,7 +12,7 @@ const a = [
     value: 2,
   },
 ];
-const { sys_user_sex, format } = useDicts(['sys_user_sex']);
+const { sys_user_sex, format, sys_user_sex_loading } = useDicts(['sys_user_sex']);
 const res = computed(() => format(a, [1, 2], { isRaw: true }));
 const res2 = computed(() => format(sys_user_sex, [1, 2]));
 </script>

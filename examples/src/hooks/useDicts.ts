@@ -1,4 +1,4 @@
-import type { DictBaseOptions, DictDataListRecord, DictDataLoadingRecord, LoadDict, OriginDictData } from '@zdzz/shared';
+import type { DictBaseOptions, LoadDict, OriginDictData } from '@zdzz/shared';
 import { computed, toRefs, unref } from 'vue';
 import { defHttp } from '@/utils/defHttp';
 import { Dict } from '@zdzz/shared';
@@ -30,21 +30,17 @@ const getDicts: LoadDict<DictTypes> = (dictType) => {
       });
   });
 };
-interface BaseDicts<DT extends string, F, L> {
-  dicts: DictDataListRecord<DT>;
-  dictsLoading: DictDataLoadingRecord<DT>;
-  format: F; // typeof format;
-  load: L; // typeof load;
-}
+
 export function useDicts<DT extends DictTypes = DictTypes>(dts: DT[], options: Partial<DictBaseOptions> = {}) {
   const dict = new Dict<DT>(dts, getDicts, options);
   // debug
-  Dict.debug = true;
+  // Dict.debug = true;
   const format = dict.format.bind(dict);
   const load = dict.load.bind(dict);
   const dicts = computed (() => dict.data.value);
   const dictsLoading = computed (() => dict.loading.value);
-  const useRuoyiDictsReturn = {
+
+  return {
     format,
     load,
     dicts,
@@ -52,10 +48,5 @@ export function useDicts<DT extends DictTypes = DictTypes>(dts: DT[], options: P
     ...toRefs(unref(dict.data)),
     ...toRefs(unref(dict.loading)),
   };
-
-  type UseRuoyiDictsReturn = RecordRef<DictDataListRecord<DT>>
-  & RecordRef<DictDataLoadingRecord<DT>>
-  & BaseDicts<DT, typeof format, typeof load>;
-  return useRuoyiDictsReturn as unknown as UseRuoyiDictsReturn;
 }
 
