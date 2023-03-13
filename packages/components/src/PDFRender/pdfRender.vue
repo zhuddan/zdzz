@@ -3,6 +3,7 @@ import 'pdfjs-dist/build/pdf.worker.entry';
 import { nextTick, ref, useSlots, watch } from 'vue';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.js';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.js';
+import { ErrorRender } from '../ErrorRender';
 import { sleep } from '@zdzz/shared';
 const props = defineProps({
   url: {
