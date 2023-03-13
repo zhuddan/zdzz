@@ -95,9 +95,6 @@ function fixTable() {
   }
 }
 watch(() => props.url, update, { immediate: true });
-onMounted(() => {
-  console.log(slots);
-});
 defineExpose({
   update,
 });

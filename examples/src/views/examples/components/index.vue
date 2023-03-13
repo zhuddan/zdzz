@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ExcelRenderInstance } from '@zdzz/components';
-import { ExcelRender } from '../../../../../packages/components/src/ExcelRender';
+import { ExcelRender } from '@zdzz/components';
 
 import '@zdzz/components/es/style.css';
 
@@ -21,19 +21,19 @@ function handleDownload() {
 
 <template>
   <div class="">
-    <ExcelRender url="/2a.xls">
-      <!-- <template #default="{ error }">
-        {{ error }}
-      </template> -->
-      <template #error="{ errorMsg }">
+    <ExcelRender v-slot="{ errorMsg, update }" url="url">
+      <div icon="error" title="预览失败" :sub-title="errorMsg">
         {{ errorMsg }}
-      </template>
-      <template #refresh-btn="{ update }">
         <button @click="update">
-          update
+          刷新
         </button>
-      </template>
+      </div>
     </ExcelRender>
+    <!-- <ExcelRender v-slot="{ errorMsg, update }" url="/2a.xls">
+      <button @click="update">
+        update
+      </button>
+    </ExcelRender> -->
     <!-- <ExcelRender ref="excelRef" url="/l.pdf" @error="handleError" />
     <Icon icon="vue.svg" />
     <Icon icon="ep:plus" color="red" :size="120" />
