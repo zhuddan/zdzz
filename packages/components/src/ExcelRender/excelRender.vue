@@ -108,17 +108,19 @@ defineExpose({
     <template v-if="!isError">
       <div class="excel-render-wrap" v-html="tableau"></div>
     </template>
-    <template v-if="slots.default">
-      <slot :error-msg="errorMsg" :update="update"></slot>
+    <template v-else>
+      <template v-if="slots.default">
+        <slot :error-msg="errorMsg" :update="update"></slot>
+      </template>
+      <ErrorRender v-else :is-error="isError" :error-msg="errorMsg" @refresh="update">
+        <template v-if="slots.error" #error>
+          <slot name="error" :error-msg="errorMsg"></slot>
+        </template>
+        <template v-if="slots['refresh-btn']" #refresh-btn>
+          <slot name="refresh-btn" :update="update"></slot>
+        </template>
+      </ErrorRender>
     </template>
-    <ErrorRender v-else :is-error="isError" :error-msg="errorMsg" @refresh="update">
-      <template v-if="slots.error" #error>
-        <slot name="error" :error-msg="errorMsg"></slot>
-      </template>
-      <template v-if="slots['refresh-btn']" #refresh-btn>
-        <slot name="refresh-btn" :update="update"></slot>
-      </template>
-    </ErrorRender>
   </div>
 </template>
 
