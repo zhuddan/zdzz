@@ -39,7 +39,7 @@ export class Dict<DT extends string = string> extends DictBase {
         if (Object.prototype.hasOwnProperty.call(this.dictMeta, key))
           this._loading[`${key}_loading`] = this.dictMeta[key].loading as any;
       }
-      return this._loading as DictDataListRecord<DT>;
+      return this._loading as DictDataLoadingRecord<DT>;
     });
   }
 
