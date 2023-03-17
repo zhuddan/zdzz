@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import 'pdfjs-dist/build/pdf.worker.entry';
-import { Comment, computed, nextTick, ref, useSlots, watch } from 'vue';
+import { Comment, computed, nextTick, onMounted, ref, useSlots, watch } from 'vue';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.js';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.js';
 import { Loading } from '../Loading';
@@ -19,7 +19,7 @@ defineOptions({
   name: 'PdfRender',
 });
 
-const canvasRef = ref<Array<HTMLCanvasElement>>();
+const canvasRef = ref<HTMLCanvasElement[]>([]);
 const numPages = ref(0);
 const loading = ref(false);
 const isError = ref(false);
@@ -32,14 +32,13 @@ async function update() {
   const loadingTask = getDocument(props.url);
   loadingTask.promise
     .then(async (pdf) => {
-      // pdfDoc = pdf;
+      loading.value = false;
+      numPages.value = pdf.numPages;
+      await nextTick();
       for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        numPages.value = pageNum;
-        await nextTick();
         if (canvasRef.value && canvasRef.value.length) {
           // 每10页休息一下，避免页面卡顿
           if (pageNum % 10 == 0) await sleep();
-          console.log(pageNum);
           await render(pdf, pageNum);
         }
       }
@@ -56,7 +55,6 @@ async function update() {
 }
 
 async function render(pdf: PDFDocumentProxy, pageNum: number) {
-  await nextTick();
   const canvas = canvasRef.value![pageNum - 1] as HTMLCanvasElement;
   const page = await pdf.getPage(pageNum);
   // 解决页面显示太模糊的问题
@@ -72,10 +70,11 @@ async function render(pdf: PDFDocumentProxy, pageNum: number) {
   page.render(renderContext as any);
 }
 
-watch(() => props.url, update, { immediate: true });
+watch(() => props.url, update);
 defineExpose({
   update,
 });
+onMounted(update);
 const isCommentSlot = computed(() => {
   return slots.default?.()?.every(e => e.type === Comment);
 });

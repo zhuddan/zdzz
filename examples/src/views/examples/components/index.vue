@@ -23,7 +23,7 @@ function handleDownload() {
 
 <template>
   <div class="">
-    <PDFRender url="url22.a">
+    <PDFRender url="http://47.101.37.41:8081/api/sys/reportPdf/bondsReportPdfPreview?reportId=97">
       <!-- <div icon="error" title="预览失败" :sub-title="errorMsg">
         {{ errorMsg }}
         <button @click="update">
