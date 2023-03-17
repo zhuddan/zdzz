@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import axios from 'axios';
 import * as XLSX from 'xlsx';
-import { nextTick, onMounted, ref, useSlots, watch } from 'vue';
-import { ErrorRender } from '../ErrorRender';
+import { Comment, computed, nextTick, onMounted, ref, useSlots, watch } from 'vue';
+import { Loading } from '../Loading';
+import { Icon } from '../Icon';
+
 const props = defineProps({
   url: {
     type: String,
@@ -21,6 +23,7 @@ const isError = ref(false);
 const errorMsg = ref('');
 function update() {
   if (!props.url) return;
+  isError.value = false;
   loading.value = true;
   axios
     .get(props.url, {
@@ -98,26 +101,57 @@ watch(() => props.url, update, { immediate: true });
 defineExpose({
   update,
 });
+
+const isCommentSlot = computed(() => {
+  return slots.default?.()?.every(e => e.type === Comment);
+});
+
+onMounted(() => {
+  console.log(isCommentSlot);
+});
 </script>
 
 <template>
   <div class="excel-render">
-    <template v-if="!isError">
+    <template v-if="!isError && !loading">
       <div class="excel-render-wrap" v-html="tableau"></div>
     </template>
+
     <template v-else>
-      <template v-if="slots.default">
-        <slot :error-msg="errorMsg" :update="update"></slot>
+      <template v-if="loading">
+        <slot v-if="slots.loading" name="loading"></slot>
+        <Loading v-else class="inner" />
       </template>
-      <ErrorRender v-else :is-error="isError" :error-msg="errorMsg" @refresh="update">
-        <template v-if="slots.error" #error>
-          <slot name="error" :error-msg="errorMsg"></slot>
+
+      <template v-if="isError">
+        <template v-if="!isCommentSlot">
+          <slot :error-msg="errorMsg" :is-error="isError" :loading="loading" :update="update"></slot>
         </template>
-        <template v-if="slots['refresh-btn']" #refresh-btn>
-          <slot name="refresh-btn" :update="update"></slot>
+
+        <template v-else>
+          <slot v-if="slots.error" name="error" :error-msg="errorMsg"></slot>
+          <template v-else>
+            <div class="error-inner inner">
+              <Icon icon="ep:circle-close-filled" color="#f56c6c" size="64" />
+              <p>
+                {{ errorMsg }}
+              </p>
+            </div>
+          </template>
+
+          <template v-if="slots['refresh-btn']">
+            <slot name="refresh-btn" :update="update"></slot>
+          </template>
+
+          <template v-else>
+            <div style="text-align: center;">
+              <button class="button error" @click="update">
+                刷新
+              </button>
+            </div>
+          </template>
         </template>
-      </ErrorRender>
+      </template>
     </template>
   </div>
 </template>
-

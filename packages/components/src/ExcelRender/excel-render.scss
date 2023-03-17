@@ -1,6 +1,9 @@
-@use '../ErrorRender/error-render.scss';
 
 .excel-render {
+  .inner{
+    margin: 10vh 0 0;
+  }
+
   .excel-render-wrap {
     min-height: 300px;
 

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import 'pdfjs-dist/build/pdf.worker.entry';
-import { nextTick, ref, useSlots, watch } from 'vue';
+import { Comment, computed, nextTick, ref, useSlots, watch } from 'vue';
 import type { PDFDocumentProxy } from 'pdfjs-dist/legacy/build/pdf.js';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.js';
-import { ErrorRender } from '../ErrorRender';
+import { Loading } from '../Loading';
 import { sleep } from '@zdzz/shared';
+import { Icon } from '../Icon';
+
 const props = defineProps({
   url: {
     type: String,
@@ -23,7 +25,6 @@ const loading = ref(false);
 const isError = ref(false);
 const errorMsg = ref('');
 const slots = useSlots();
-// let pdfDoc: Nullable<PDFDocumentProxy> = (null);
 async function update() {
   if (!props.url) return;
   loading.value = true;
@@ -75,27 +76,53 @@ watch(() => props.url, update, { immediate: true });
 defineExpose({
   update,
 });
+const isCommentSlot = computed(() => {
+  return slots.default?.()?.every(e => e.type === Comment);
+});
 </script>
 
 <template>
-  <div :class="[loading]" class="pdf-render">
-    <template v-if="!isError">
+  <div class="pdf-render">
+    <template v-if="!isError && !loading">
       <div v-for="item in numPages" :key="item" class="pdf-pages-wrapper">
         <canvas ref="canvasRef"></canvas>
       </div>
     </template>
     <template v-else>
-      <template v-if="slots.default">
-        <slot :error-msg="errorMsg" :update="update"></slot>
+      <template v-if="loading">
+        <slot v-if="slots.loading" name="loading"></slot>
+        <Loading v-else class="inner" />
       </template>
-      <ErrorRender v-else :is-error="isError" :error-msg="errorMsg" @refresh="update">
-        <template v-if="slots.error" #error>
-          <slot name="error" :error-msg="errorMsg"></slot>
+
+      <template v-if="isError">
+        <template v-if="!isCommentSlot">
+          <slot :error-msg="errorMsg" :is-error="isError" :loading="loading" :update="update"></slot>
         </template>
-        <template v-if="slots['refresh-btn']" #refresh-btn>
-          <slot name="refresh-btn" :update="update"></slot>
+
+        <template v-else>
+          <slot v-if="slots.error" name="error" :error-msg="errorMsg"></slot>
+          <template v-else>
+            <div class="error-inner inner">
+              <Icon icon="ep:circle-close-filled" color="#f56c6c" size="64" />
+              <p>
+                {{ errorMsg }}
+              </p>
+            </div>
+          </template>
+
+          <template v-if="slots['refresh-btn']">
+            <slot name="refresh-btn" :update="update"></slot>
+          </template>
+
+          <template v-else>
+            <div style="text-align: center;">
+              <button class="button error" @click="update">
+                刷新
+              </button>
+            </div>
+          </template>
         </template>
-      </ErrorRender>
+      </template>
     </template>
   </div>
 </template>

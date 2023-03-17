@@ -1,7 +1,9 @@
-@use '../ErrorRender/error-render.scss';
 
 .pdf-render{
-  min-height: 300px;
+
+  .inner{
+    margin: 10vh 0 0;
+  }
 
   canvas {
     width: 100%;
