@@ -44,6 +44,7 @@ async function update() {
       }
     })
     .catch((e) => {
+      console.log(e);
       errorMsg.value = e.message.replace('Missing PDF', '找不到PDF');
       isError.value = true;
       numPages.value = 0;
@@ -76,11 +77,13 @@ defineExpose({
 });
 onMounted(update);
 const isCommentSlot = computed(() => {
+  if (!slots.default) return true;
   return slots.default?.()?.every(e => e.type === Comment);
 });
 </script>
 
 <template>
+  {{ { isError, loading, isCommentSlot } }}
   <div class="pdf-render">
     <template v-if="!isError && !loading">
       <div v-for="item in numPages" :key="item" class="pdf-pages-wrapper">
@@ -92,8 +95,9 @@ const isCommentSlot = computed(() => {
         <slot v-if="slots.loading" name="loading"></slot>
         <Loading v-else class="inner" />
       </template>
-
       <template v-if="isError">
+        {{ isCommentSlot }}
+
         <template v-if="!isCommentSlot">
           <slot :error-msg="errorMsg" :is-error="isError" :loading="loading" :update="update"></slot>
         </template>

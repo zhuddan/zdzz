@@ -31,12 +31,11 @@
   border-style: solid;
   vertical-align: middle;
   align-items: center;
-  
+  user-select: none;
 
   &:hover{
     cursor: pointer;
     color: #fff;
     background-color: #409eff;
   }
-
 }

@@ -2,7 +2,7 @@
 import type { ExcelRenderInstance } from '@zdzz/components';
 // import { ExcelRender } from '@zdzz/components';
 
-import { PDFRender } from '../../../../../packages/components/src/';
+import { PDFRender } from '../../../../../packages/components/src';
 
 import '../../../../../packages/components/src/style.scss';
 
@@ -19,32 +19,12 @@ function handleDownload() {
     console.error(e);
   });
 }
+console.log(PDFRender);
 </script>
 
 <template>
   <div class="">
-    <PDFRender url="http://47.101.37.41:8081/api/sys/reportPdf/bondsReportPdfPreview?reportId=97">
-      <!-- <div icon="error" title="预览失败" :sub-title="errorMsg">
-        {{ errorMsg }}
-        <button @click="update">
-          刷新
-        </button>
-      </div> -->
-      <!-- <template #loading>
-        loading
-      </template> -->
-    </PDFRender>
-    <!-- <ExcelRender v-slot="{ errorMsg, update }" url="/2a.xls">
-      <button @click="update">
-        update
-      </button>
-    </ExcelRender> -->
-    <!-- <ExcelRender ref="excelRef" url="/l.pdf" @error="handleError" />
-    <Icon icon="vue.svg" />
-    <Icon icon="ep:plus" color="red" :size="120" />
-    <button @click="handleDownload">
-      handleDownload
-    </button> -->
+    <PDFRender url="http://47.101.37.41:8081/api/sys/reportPdf/bondsReportPdfPreview?reportId=9227" />
   </div>
 </template>
 

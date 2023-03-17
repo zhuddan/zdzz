@@ -103,6 +103,7 @@ defineExpose({
 });
 
 const isCommentSlot = computed(() => {
+  if (!slots.default) return true;
   return slots.default?.()?.every(e => e.type === Comment);
 });
 
