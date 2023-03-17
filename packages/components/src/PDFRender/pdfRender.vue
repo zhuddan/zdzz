@@ -83,7 +83,6 @@ const isCommentSlot = computed(() => {
 </script>
 
 <template>
-  {{ { isError, loading, isCommentSlot } }}
   <div class="pdf-render">
     <template v-if="!isError && !loading">
       <div v-for="item in numPages" :key="item" class="pdf-pages-wrapper">
@@ -96,8 +95,6 @@ const isCommentSlot = computed(() => {
         <Loading v-else class="inner" />
       </template>
       <template v-if="isError">
-        {{ isCommentSlot }}
-
         <template v-if="!isCommentSlot">
           <slot :error-msg="errorMsg" :is-error="isError" :loading="loading" :update="update"></slot>
         </template>
