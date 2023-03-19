@@ -16,6 +16,7 @@
   ],
   "scripts": {
     "build": "pnpm run clear && vite build && pnpm run build:scss",
+    "build:type": "pnpm run clear && vite build --mode type",
     "build:scss": "esno script/buildScss",
     "version:patch": "pnpm version patch",
     "clear": "rm -rf dist es lib",

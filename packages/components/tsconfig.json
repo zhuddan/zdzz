@@ -5,6 +5,8 @@
     "baseUrl": "./",
     "rootDir": "./",
     "outDir": "./dist",
+    "declarationDir":true,
+    "noEmit": true,
     "types": [
       "@zdzz/shared/global",
       "vite/client",

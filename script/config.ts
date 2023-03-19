@@ -42,6 +42,45 @@ export function distOutput(moduleFormat: ModuleFormat, name?: string): OutputOpt
   };
 }
 
+export function createtTypes(options?: Partial<{
+  replacePath: boolean;
+  vue: boolean;
+  output: OutputType[];
+  plugins: PluginOption[];
+}>): UserConfig {
+  const output = options?.output || ['dist', 'es', 'lib'];
+  const replacePath = options?.replacePath || false;
+  const isVue = options?.vue ;
+  const basePlugins: PluginOption[] = [];
+  const dtsPlugin = dts({
+    include: ['src/**/*.ts', 'type.d.ts', 'src/**/*.vue'],
+    outputDir: output,
+    beforeWriteFile(filePath: string, content) {
+      const filePathOut = filePath
+        .replace(/dist\/src\//, 'dist/')
+        .replace(/es\/src\//, 'es/')
+        .replace(/lib\/src\//, 'lib/');
+      return {
+        filePath: replacePath ? filePath : filePathOut,
+        content,
+      };
+    },
+  });
+
+  if (isVue) basePlugins.push(vuePlugin(), DefineOptions());
+  basePlugins.push(dtsPlugin);
+
+  return {
+    plugins: basePlugins,
+    build: {
+      lib: {
+        formats: ['es'],
+        entry: './src/index.d.ts',
+      },
+    },
+  };
+}
+
 export function preserveModulesOutput(format: ModuleFormat, dir?: string): OutputOptions {
   return {
     globals: GLOBALS,
@@ -62,8 +101,6 @@ export const createConfig = (
     plugins: PluginOption[];
   }>,
 ): UserConfig => {
-  const replacePath = options?.replacePath || false;
-
   const output = options?.output || ['dist', 'es', 'lib'];
   const outputOptions: OutputOptions[] = [];
   if (output.includes('dist')) {
@@ -80,26 +117,12 @@ export const createConfig = (
   if (output.includes('lib'))
     outputOptions.push(preserveModulesOutput('cjs', 'lib'));
 
-  const isVue = options?.vue || false;
+  const isVue = options?.vue ;
   const basePlugins: PluginOption[] = [];
   if (isVue) basePlugins.push(vuePlugin(), DefineOptions());
   return {
     plugins: [
-      ...basePlugins,
-      dts({
-        include: ['src/**/*.ts', 'type.d.ts', 'src/**/*.vue'],
-        outputDir: output,
-        beforeWriteFile(filePath: string, content) {
-          const filePathOut = filePath
-            .replace(/dist\/src\//, 'dist/')
-            .replace(/es\/src\//, 'es/')
-            .replace(/lib\/src\//, 'lib/');
-          return {
-            filePath: replacePath ? filePath : filePathOut,
-            content,
-          };
-        },
-      }),
+      ...createtTypes(options).plugins!,
       ...(options?.plugins || []),
     ],
     build: {
