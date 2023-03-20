@@ -1,4 +1,4 @@
-import { parseJson, stringifyJson } from 'src/json';
+import { parseJson, stringifyJson } from '../json';
 import { isNumber, isObject } from '../is';
 import type { WebCacheData, WebCacheTime } from './types';
 

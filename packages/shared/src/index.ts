@@ -10,6 +10,7 @@ export * from './formatSize';
 export * from './getParams';
 export * from './http';
 export * from './is';
+export * from './json';
 export * from './listToTree';
 export * from './merge';
 export * from './setParams';
