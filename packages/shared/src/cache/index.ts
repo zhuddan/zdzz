@@ -57,14 +57,16 @@ export class WebCache<CacheType extends Recordable> {
       value,
       expires: this.getExpires(options),
     });
-    localStorage.setItem(_key, data);
+    data && localStorage.setItem(_key, data);
   }
 
   get<K extends keyof CacheType>(key: K) {
     const _key = this.getRealKey(key);
     const res = localStorage.getItem(_key);
     if (!res) return null;
-    const { expires, value } = parseJson<WebCacheData<CacheType[K]>>(res);
+    const result = parseJson<WebCacheData<CacheType[K]>>(res);
+    if (!result) return null;
+    const { expires, value } = result;
     const now = Date.now();
     if (expires < now) {
       this.remove(key);

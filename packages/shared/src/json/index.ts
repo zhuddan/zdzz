@@ -1,17 +1,17 @@
-export function stringifyJson(data: Recordable): string {
+export function stringifyJson(data: Recordable): Nullable<string> {
   try {
     return JSON.stringify(data);
   }
   catch (error) {
-    throw new Error(error as any);
+    return null;
   }
 }
 
-export function parseJson<T extends Recordable = Recordable>(jsonStr: string): T {
+export function parseJson<T extends Recordable = Recordable>(jsonStr: string): Nullable<T> {
   try {
     return JSON.parse(jsonStr);
   }
   catch (error) {
-    throw new Error(error as any);
+    return null;
   }
 }
