@@ -1,6 +1,6 @@
-import { createConfig } from '../../script/config';
+import { createBuildConfig } from '../../script/build';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
-  return createConfig('zd_hooks');
+  return createBuildConfig('zd_hooks');
 });

@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { PDFRender } from '@zdzz/components';
 import type { ExcelRenderInstance } from '@zdzz/components';
+import '@zdzz/components/dist/style.scss';
 // import { ExcelRender } from '@zdzz/components';
 
-import { PDFRender } from '../../../../../packages/components/src';
+// import { PDFRender } from '../../../../../packages/components/src';
 
-import '../../../../../packages/components/src/style.scss';
+// import '../../../../../packages/components/src/style.scss';
 
 // import { ref } from 'vue';
 import { download } from '@zdzz/shared';

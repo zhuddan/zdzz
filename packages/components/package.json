@@ -1,6 +1,6 @@
 {
   "name": "@zdzz/components",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -16,7 +16,6 @@
   ],
   "scripts": {
     "build": "pnpm run clear && vite build && pnpm run build:scss",
-    "build:type": "pnpm run clear && vite build --mode type",
     "build:scss": "esno script/buildScss",
     "version:patch": "pnpm version patch",
     "clear": "rm -rf dist es lib",

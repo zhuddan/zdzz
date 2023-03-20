@@ -1,8 +1,8 @@
-import { createConfig } from '../../script/config';
+import { createBuildConfig } from '../../script/build';
 import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
-  return createConfig('zd_shared', {
+  return createBuildConfig('zd_shared', {
     replacePath: false,
   });
 });

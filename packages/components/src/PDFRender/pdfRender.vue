@@ -25,7 +25,11 @@ const loading = ref(false);
 const isError = ref(false);
 const errorMsg = ref('');
 const slots = useSlots();
-async function update() {
+const isCommentSlot = computed(() => {
+  if (!slots.default) return true;
+  return slots.default?.()?.every(e => e.type === Comment);
+});
+async function render() {
   if (!props.url) return;
   loading.value = true;
   isError.value = false;
@@ -39,7 +43,7 @@ async function update() {
         if (canvasRef.value && canvasRef.value.length) {
           // 每10页休息一下，避免页面卡顿
           if (pageNum % 10 == 0) await sleep();
-          await render(pdf, pageNum);
+          await renderPage(pdf, pageNum);
         }
       }
     })
@@ -55,7 +59,7 @@ async function update() {
     });
 }
 
-async function render(pdf: PDFDocumentProxy, pageNum: number) {
+async function renderPage(pdf: PDFDocumentProxy, pageNum: number) {
   const canvas = canvasRef.value![pageNum - 1] as HTMLCanvasElement;
   const page = await pdf.getPage(pageNum);
   // 解决页面显示太模糊的问题
@@ -71,14 +75,9 @@ async function render(pdf: PDFDocumentProxy, pageNum: number) {
   page.render(renderContext as any);
 }
 
-watch(() => props.url, update);
+watch(() => props.url, render, { immediate: true });
 defineExpose({
-  update,
-});
-onMounted(update);
-const isCommentSlot = computed(() => {
-  if (!slots.default) return true;
-  return slots.default?.()?.every(e => e.type === Comment);
+  render,
 });
 </script>
 
@@ -96,7 +95,7 @@ const isCommentSlot = computed(() => {
       </template>
       <template v-if="isError">
         <template v-if="!isCommentSlot">
-          <slot :error-msg="errorMsg" :is-error="isError" :loading="loading" :update="update"></slot>
+          <slot :error-msg="errorMsg" :is-error="isError" :loading="loading" :update="render"></slot>
         </template>
 
         <template v-else>
@@ -111,12 +110,12 @@ const isCommentSlot = computed(() => {
           </template>
 
           <template v-if="slots['refresh-btn']">
-            <slot name="refresh-btn" :update="update"></slot>
+            <slot name="refresh-btn" :update="render"></slot>
           </template>
 
           <template v-else>
             <div style="text-align: center;">
-              <button class="button error" @click="update">
+              <button class="button error" @click="render">
                 刷新
               </button>
             </div>

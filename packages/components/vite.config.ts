@@ -1,7 +1,6 @@
-import { createConfig, createtTypes } from '../../script/config';
+import { createBuildConfig } from '../../script/build';
 import { defineConfig } from 'vite';
 
-export default defineConfig(({ mode }) => {
-  if (mode == 'type') return createtTypes({ vue: true, output: ['dist'] });
-  return createConfig('zd_components', { vue: true });
+export default defineConfig(({ }) => {
+  return createBuildConfig('zd_components', { vue: true });
 });

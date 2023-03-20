@@ -15,13 +15,17 @@ const emit = defineEmits(['error']);
 defineOptions({
   name: 'ExcelRender',
 });
-const slots = useSlots();
 
 const loading = ref(false);
 const tableau = ref('');
 const isError = ref(false);
 const errorMsg = ref('');
-function update() {
+const slots = useSlots();
+const isCommentSlot = computed(() => {
+  if (!slots.default) return true;
+  return slots.default?.()?.every(e => e.type === Comment);
+});
+function render() {
   if (!props.url) return;
   isError.value = false;
   loading.value = true;
@@ -97,18 +101,9 @@ function fixTable() {
     }
   }
 }
-watch(() => props.url, update, { immediate: true });
+watch(() => props.url, render, { immediate: true });
 defineExpose({
-  update,
-});
-
-const isCommentSlot = computed(() => {
-  if (!slots.default) return true;
-  return slots.default?.()?.every(e => e.type === Comment);
-});
-
-onMounted(() => {
-  console.log(isCommentSlot);
+  render,
 });
 </script>
 
@@ -126,7 +121,7 @@ onMounted(() => {
 
       <template v-if="isError">
         <template v-if="!isCommentSlot">
-          <slot :error-msg="errorMsg" :is-error="isError" :loading="loading" :update="update"></slot>
+          <slot :error-msg="errorMsg" :is-error="isError" :loading="loading" :update="render"></slot>
         </template>
 
         <template v-else>
@@ -141,12 +136,12 @@ onMounted(() => {
           </template>
 
           <template v-if="slots['refresh-btn']">
-            <slot name="refresh-btn" :update="update"></slot>
+            <slot name="refresh-btn" :update="render"></slot>
           </template>
 
           <template v-else>
             <div style="text-align: center;">
-              <button class="button error" @click="update">
+              <button class="button error" @click="render">
                 刷新
               </button>
             </div>
