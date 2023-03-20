@@ -2,12 +2,13 @@ import { parseJson, stringifyJson } from '../json';
 import { isNumber, isObject } from '../is';
 import type { WebCacheData, WebCacheTime } from './types';
 
+type ExpiresTime = number | WebCacheTime;
 export class WebCache<CacheType extends Recordable> {
   projectName: string;
   projectVersion: string;
   defaultExpires = 864e5 * 7;
 
-  constructor({ projectName, time, projectVersion }: { projectName: string; projectVersion: string; time?: number | WebCacheTime }) {
+  constructor({ projectName, time, projectVersion }: { projectName: string; projectVersion: string; time?: ExpiresTime }) {
     this.projectName = projectName;
     this.projectVersion = projectVersion;
     if (!time) return;
@@ -50,7 +51,7 @@ export class WebCache<CacheType extends Recordable> {
     return Date.now() + expires;
   }
 
-  set<K extends keyof CacheType>(key: K, value: CacheType[K], options = this.defaultExpires) {
+  set<K extends keyof CacheType>(key: K, value: CacheType[K], options: ExpiresTime = this.defaultExpires) {
     const _key = this.getRealKey(key);
     const data = stringifyJson({
       value,
