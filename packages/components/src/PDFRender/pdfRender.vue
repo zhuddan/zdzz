@@ -16,7 +16,7 @@ const props = defineProps({
 const emit = defineEmits(['error']);
 
 defineOptions({
-  name: 'PdfRender',
+  name: 'PDFRender',
 });
 
 const canvasRef = ref<HTMLCanvasElement[]>([]);
