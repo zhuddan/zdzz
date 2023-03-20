@@ -5,7 +5,7 @@ export interface WebCacheTime {
   second?: number;
 }
 
-export interface WebCacheData {
-  value: any;
+export interface WebCacheData<T = any> {
+  value: T;
   expires: number;
 }

@@ -45,11 +45,11 @@ export abstract class AxiosTransform {
    */
   responseInterceptorsCatch?: (axiosInstance: AxiosResponse, error: Error) => void;
 }
-export type CreateMessageFn = (mode: ErrorMessageMode, errorMessage: string) => void;
+export type OnErrorFn = (mode: ErrorMessageMode, errorMessage: string) => void;
 export interface CreateAxiosTransformOptions {
-  createMessage?: CreateMessageFn;
-  getToken?: () => null | string;
-  removeToken?: () => void;
-  signoutHandler?: () => void;
+  onError?: OnErrorFn;
+  onSignout?: Fn;
+  getToken?: () => Nullable<string>;
+  removeToken?: Fn;
 }
 export type CreateAxiosTransform = (options?: CreateAxiosTransformOptions) => AxiosTransform;

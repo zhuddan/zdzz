@@ -8,7 +8,7 @@ import { formatRequestDate, joinTimestamp } from '../core/helper';
 import { setParams } from '../../setParams';
 
 export const createRuoyiAxiosTransform: CreateAxiosTransform = (
-  { createMessage, getToken, removeToken, signoutHandler } = {},
+  { onError, getToken, removeToken, onSignout } = {},
 ) => {
   const transform: AxiosTransform = {
     /**
@@ -47,7 +47,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
       switch (code) {
         case ResultEnum.TIMEOUT:
           errorMsg = '登录超时,请重新登录!';
-          signoutHandler?.();
+          onSignout?.();
           removeToken?.();
           break;
         default:
@@ -57,8 +57,8 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
             errorMsg = '未知错误';
       }
 
-      return createMessage?.(options.errorMessageMode, errorMsg);
-      // throw new Error(errorMsg || '请求出错，请稍候重试');
+      onError?.(options.errorMessageMode, errorMsg);
+      throw new Error(errorMsg || '请求出错，请稍候重试');
     },
 
     // 请求之前处理config
@@ -148,7 +148,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
         if (err?.includes('Network Error'))
           errMessage = '网络异常，请检查您的网络连接是否正常!';
         if (errMessage) {
-          createMessage?.(errorMessageMode, errMessage);
+          onError?.(errorMessageMode, errMessage);
           return Promise.reject(error);
         }
       }
@@ -156,7 +156,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
         throw new Error(error as unknown as string);
       }
       checkStatus(error?.response?.status, msg).catch((e) => {
-        createMessage?.(errorMessageMode, e);
+        onError?.(errorMessageMode, e);
       });
 
       return Promise.reject(error);

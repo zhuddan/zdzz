@@ -1,7 +1,8 @@
+import { parseJson, stringifyJson } from 'src/json';
 import { isNumber, isObject } from '../is';
 import type { WebCacheData, WebCacheTime } from './types';
 
-export class WebCache<T extends string> {
+export class WebCache<CacheType extends Recordable> {
   projectName: string;
   projectVersion: string;
   defaultExpires = 864e5 * 7;
@@ -10,29 +11,25 @@ export class WebCache<T extends string> {
     this.projectName = projectName;
     this.projectVersion = projectVersion;
     if (!time) return;
-    const t = isObject(time) ? this.formatTime(time) : time;
+    const t = isObject(time) ? this.formatExpires(time) : time;
     this.defaultExpires = t;
   }
 
-  get VALUE_PREFIX() {
+  get perfixKey() {
     return `${this.projectName}_${this.projectVersion}_`;
   }
 
-  assembleKey(key: T) {
-    return `${this.VALUE_PREFIX}${key}`;
+  getRealKey<K extends keyof CacheType>(key: K) {
+    return `${this.perfixKey}${String(key)}`;
   }
 
-  formatKey(key: string): string {
-    if (key.indexOf(this.VALUE_PREFIX) == 0)
-      return key.replace(this.VALUE_PREFIX, '') as T;
-
-    return key;
-  }
-
-  formatTime(data: Partial<WebCacheTime> | number): number {
+  /**
+   * @description 获取超时时间
+   * @param data
+   */
+  formatExpires(data: Partial<WebCacheTime> | number): number {
     if (isNumber(data))
       return data;
-
     const { day, hour, minutes, second } = data;
     const dataDay = (day ? day * 24 : 0) * 864e2;// 秒
     const dataHours = (hour || 0) * 60 * 60;// 秒
@@ -41,59 +38,42 @@ export class WebCache<T extends string> {
     return (dataDay + dataHours + dataMinutes + dataSeconds) * 1000;
   }
 
-  getExpires(time?: Partial<WebCacheTime> | number): number {
+  getExpires(expiresTime?: Partial<WebCacheTime> | number): number {
     let expires = this.defaultExpires;
-    if (time == -1)
+    // 如果 expiresTime == -1 永远不删除
+    if (expiresTime == -1)
       expires = Number.MAX_SAFE_INTEGER;
 
-    else if (time || isObject(time))
-      expires = this.formatTime(time);
+    else if (expiresTime || isObject(expiresTime))
+      expires = this.formatExpires(expiresTime);
 
-    return new Date().getTime() + expires;
+    return Date.now() + expires;
   }
 
-  stringifyJson(data: any): string {
-    try {
-      return JSON.stringify(data);
-    }
-    catch (error) {
-      throw new Error(error as any);
-    }
-  }
-
-  parseJson(data: string): object {
-    try {
-      return JSON.parse(data);
-    }
-    catch (error) {
-      throw new Error(error as any);
-    }
-  }
-
-  set(key: T, value: any, options?: Partial<WebCacheTime> | number) {
-    const _key = this.assembleKey(key);
-    const data = this.stringifyJson({
+  set<K extends keyof CacheType>(key: K, value: CacheType[K], options = this.defaultExpires) {
+    const _key = this.getRealKey(key);
+    const data = stringifyJson({
       value,
       expires: this.getExpires(options),
     });
     localStorage.setItem(_key, data);
   }
 
-  get<R=any>(key: T) {
-    const _key = this.assembleKey(key);
+  get<K extends keyof CacheType>(key: K) {
+    const _key = this.getRealKey(key);
     const res = localStorage.getItem(_key);
     if (!res) return null;
-    const { expires, value } = this.parseJson(res) as WebCacheData;
+    const { expires, value } = parseJson<WebCacheData<CacheType[K]>>(res);
     const now = Date.now();
     if (expires < now) {
       this.remove(key);
       return null;
     }
-    return value as R;
+    return value;
   }
 
-  remove(key: T) {
-    const _key = this.assembleKey(key);
+  remove<K extends keyof CacheType>(key: K) {
+    const _key = this.getRealKey(key);
     localStorage.removeItem(_key);
   }
 
