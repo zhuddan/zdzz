@@ -2,6 +2,7 @@ export type formatData = Record<string, any>;
 import { merge } from '../merge';
 
 import { defaultFormatDictOptions } from './config';
+import { Dict } from './Dict';
 import type { FormatOptions } from './typings';
 export function format<T extends formatData = formatData>(
   data: T[],
@@ -13,8 +14,10 @@ export function format<T extends formatData = formatData>(
   const legalValues = data.map(e => `"${e?.[formatOptions.valueField]}"`).join(',');
   const result = values.map((e) => {
     const resultItem = data.find(item => item?.[formatOptions.valueField] == e) || null;
-    if (resultItem == null && legalValues.length)
-      console.warn(`[Dict.format] The legal value expected by the custom dictionary ${JSON.stringify(data)} are: ${legalValues},  but got "${e}".`);
+    if (Dict.debug) {
+      if (resultItem == null && legalValues.length)
+        console.warn(`[Dict.format] The legal value expected by the custom dictionary ${JSON.stringify(data)} are: ${legalValues},  but got "${e}".`);
+    }
     return resultItem;
   });
 
