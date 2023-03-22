@@ -1,4 +1,5 @@
 export * from './sharedTypes';
+export { useComputedRef } from './useComputedRef';
 export { useContext } from './useContext';
 export { useEventListener } from './useEventListener';
 export { useRouteParams } from './useRouteParams';

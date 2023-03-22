@@ -1,6 +1,6 @@
 {
   "name": "@zdzz/hooks",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "build": "pnpm run clear && vite build",
-    "version:patch": "pnpm version patch",
+    "version:patch": "pnpm changeset version ",
     "clear": "rm -rf dist es lib "
   },
   "keywords": [],
