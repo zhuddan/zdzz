@@ -5,13 +5,15 @@
   "private": true,
   "scripts": {
     "build:scss": "pnpm --filter=@zdzz/components run build:scss",
-    "build:components": "pnpm --filter=@zdzz/components run build",
     "reload": "pnpm run build:components && pnpm run dev",
     "dev": "pnpm --filter ./examples run dev",
     "build:examples": "pnpm --filter ./examples run build",
+
     "build": "pnpm --filter=@zdzz/* run build",
     "build:shared": "pnpm --filter=@zdzz/shared run build",
     "build:hooks": "pnpm --filter=@zdzz/hooks run build",
+    "build:components": "pnpm --filter=@zdzz/components run build",
+    
     "version:patch": "pnpm --filter=@zdzz/* run version:patch",
     "version:patch:shared": "pnpm changeset version --include=@zdzz/shared",
     "version:patch:hooks": "pnpm changeset version --include=@zdzz/hooks --tag patch",
