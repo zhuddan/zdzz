@@ -1,4 +1,4 @@
-export * from './sharedTypes';
+export { useBaseUrl } from './useBaseUrl';
 export { useComputedRef } from './useComputedRef';
 export { useContext } from './useContext';
 export { useEventListener } from './useEventListener';

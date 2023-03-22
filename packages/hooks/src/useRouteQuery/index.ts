@@ -1,8 +1,9 @@
 import type { Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, nextTick, unref } from 'vue';
-import type { ReactiveRouteOptions } from '../sharedTypes';
+import type { ReactiveRouteOptions } from '../types/router';
 
+export type { ReactiveRouteOptions } from '../types/router';
 export function useRouteQuery(name: string): Ref<null | string | string[]>;
 export function useRouteQuery<T extends null | undefined | string | string[] = null | string | string[]>(name: string, defaultValue?: T, options?: ReactiveRouteOptions): Ref<T>;
 export function useRouteQuery<T extends string | string[]>(
