@@ -1,5 +1,6 @@
+import { isUnDef } from '@zdzz/shared';
 import type { CSSProperties, Ref } from 'vue';
-import { h, nextTick, onMounted, ref, unref, watch } from 'vue';
+import { nextTick, onBeforeMount, onMounted, ref, unref, watch } from 'vue';
 import { useComputedRef } from '../useComputedRef';
 
 interface UseWatermarkImageOption {
@@ -28,16 +29,14 @@ function useWatermarkImage(str: MaybeComputedRef<string>, options: MaybeComputed
     const height = _mergeOptions.height || 80;
     const cans = can.getContext('2d')!;
     cans.clearRect(0, 0, width, height);
-
-    cans.rotate(_mergeOptions.rotate || (-20 * Math.PI) / 150);
-
+    const defaultRotate = (-20 * Math.PI) / 150;
+    cans.rotate(isUnDef(_mergeOptions.rotate) ? defaultRotate : _mergeOptions.rotate);
     for (const key in _mergeOptions) {
       if (Object.prototype.hasOwnProperty.call(_mergeOptions, key)) {
         const element = _mergeOptions[key];
         cans[key] = element;
       }
     }
-
     cans.fillText(strRef.value, width / 20 - 10, height);
     await nextTick();
     base64.value = can.toDataURL('image/png');
@@ -55,7 +54,7 @@ export function useWatermark(el: Ref<Nullable<HTMLElement>>, name: MaybeComputed
   const options = useComputedRef(style);
   const { base64 } = useWatermarkImage(watermarkName, options);
   const div = document.createElement('div');
-  const realStyle = useComputedRef<CSSProperties>(() => ({
+  const elStyle = useComputedRef<CSSProperties>(() => ({
     pointerEvents: 'none',
     top: '0px',
     left: '0px',
@@ -67,26 +66,40 @@ export function useWatermark(el: Ref<Nullable<HTMLElement>>, name: MaybeComputed
     // ...styleObj.value,
   }));
 
-  function updateDivStyle() {
-    console.log(base64);
-    for (const key in realStyle.value) {
-      if (Object.prototype.hasOwnProperty.call(realStyle.value, key)) {
-        const styleValue = realStyle.value[key];
+  function updateStyle() {
+    for (const key in elStyle.value) {
+      if (Object.prototype.hasOwnProperty.call(elStyle.value, key)) {
+        const styleValue = elStyle.value[key];
         div.style[key] = styleValue;
       }
     }
   }
 
-  watch(realStyle, updateDivStyle, { immediate: true, deep: true });
+  watch(elStyle, updateStyle, { immediate: true, deep: true });
 
-  const VNode = () => h('div', {
-    style: realStyle.value,
-    class: 'watermark',
-  });
-
+  // const VNode = () => h('div', {
+  //   style: elStyle.value,
+  //   class: 'watermark',
+  // });
+  function addWatermark() {
+    const dom = unref(el) as HTMLElement;
+    dom.appendChild(div);
+  }
+  function removeWatermark() {
+    div.remove();
+  }
   onMounted(() => {
     const dom = unref(el) as HTMLElement;
     dom.style.position = 'relative';
+    addWatermark();
   });
-  return [VNode] as const;
+
+  onBeforeMount(() => {
+    removeWatermark();
+  });
+  return {
+    div,
+    addWatermark,
+    removeWatermark,
+  };
 }

@@ -2,17 +2,23 @@
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 import AppMain from '../components/AppMain.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useWatermark } from '@zdzz/hooks/src';
-
 const layoutRef = ref<Nullable<HTMLElement>>(null);
-const color = ref('#ff00ff');
-const name = ref('哈');
-
-// setInterval(() => {
-// name.value += '哈';
-// }, 1000);
-const [watermark] = useWatermark(layoutRef, name);
+function getWatermark() {
+  const now = new Date();
+  return `版权所有@XXXX ${now.toLocaleDateString()}-${now.toLocaleTimeString()}`;
+}
+const name = ref(getWatermark());
+const rotate = ref(0);
+const now = computed(() => {
+  const n = new Date();
+  return `${n.getFullYear()}`;
+});
+setInterval(() => {
+  name.value = getWatermark();
+}, 100);
+const { removeWatermark } = useWatermark(layoutRef, name, { font: '15px Vedana', rotate: (-10 * Math.PI) / 180, height: 80 });
 </script>
 
 <template>
@@ -20,7 +26,6 @@ const [watermark] = useWatermark(layoutRef, name);
     <AppHeader />
     <AppMain />
     <AppFooter />
-    <watermark />
   </section>
 </template>
 
