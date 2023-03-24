@@ -36,7 +36,7 @@ function render() {
     .then((res) => {
       try {
         const data = res.data;
-        const legalTypes = ['text/xml', 'application/msexcel'];
+        const legalTypes = ['text/xml', 'application/msexcel', 'application/vnd.ms-excel'];
         isError.value = !legalTypes.includes(data.type);
         const fr = new FileReader();
         fr.readAsArrayBuffer(data);

@@ -18,7 +18,7 @@ const now = computed(() => {
 setInterval(() => {
   name.value = getWatermark();
 }, 100);
-const { removeWatermark } = useWatermark(layoutRef, name, { font: '15px Vedana', rotate: (-10 * Math.PI) / 180, height: 80 });
+// const { removeWatermark } = useWatermark(layoutRef, name, { font: '15px Vedana', rotate: (-10 * Math.PI) / 180, height: 80 });
 </script>
 
 <template>

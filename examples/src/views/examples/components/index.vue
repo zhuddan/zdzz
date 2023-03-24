@@ -1,32 +1,14 @@
 <script setup lang="ts">
-import { PDFRender } from '@zdzz/components';
-import type { ExcelRenderInstance } from '@zdzz/components';
-import '@zdzz/components/dist/style.scss';
-// import { ExcelRender } from '@zdzz/components';
-
-// import { PDFRender } from '../../../../../packages/components/src';
-
-// import '../../../../../packages/components/src/style.scss';
-
-// import { ref } from 'vue';
-import { download } from '@zdzz/shared';
-function handleError(e: string) {
-  console.log(e);
-}
-// const excelRef = ref<Nullable<ExcelRenderInstance>>(null);
-function handleDownload() {
-  download({
-    url: '/a.pdf',
-  }).catch((e) => {
-    console.error(e);
-  });
-}
-console.log(PDFRender);
+import { ExcelRender } from '../../../../../packages/components/src';
+import '@zdzz/components/dist/style.css';
+const successUrl = 'http://47.101.37.41:8081/api/sys/pdf/parkReportExcelDownload?unitId=312&startMonth=202301&endMonth=202303&isPark=1&reportType=first1';
+const errorUrl = 'http://47.101.37.41:8081/profile/upload/2023/03/24/综合月报导入模板 (4)_20230324155451A234.xls';
 </script>
 
 <template>
   <div class="">
-    <PDFRender url="http://47.101.37.41:8081/api/sys/reportPdf/bondsReportPdfPreview?reportId=9227" />
+    <!-- <ExcelRender :url="successUrl" /> -->
+    <ExcelRender :url="errorUrl" />
   </div>
 </template>
 
