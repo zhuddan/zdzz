@@ -1,13 +1,14 @@
 import 'viewerjs/dist/viewer.css';
 import Viewer from 'viewerjs';
-import type { Ref } from 'vue';
 import { computed, nextTick, onBeforeUnmount, watch } from 'vue';
+import { useComputedRef } from 'src/useComputedRef';
 
-export function useImageViewer(imgSrc: Ref<string> | Ref<string[]>, options: Viewer.Options = {}) {
+export function useImageViewer(arrayableImage: MaybeComputedRef<string | string[]>, options: Viewer.Options = {}) {
   let viewer: Nullable<Viewer> = null;
   let imageElement: Nullable<HTMLImageElement> = null;
   let imageListElement: Nullable<HTMLDivElement> = null;
-  const isImageList = computed(() => imgSrc.value instanceof Array);
+  const imageSrc = useComputedRef(arrayableImage);
+  const isImageList = computed(() => imageSrc instanceof Array);
 
   function getOptions() {
     const defaultOptions: Viewer.Options = {
@@ -40,9 +41,9 @@ export function useImageViewer(imgSrc: Ref<string> | Ref<string[]>, options: Vie
 
   function updateELement() {
     destroy();
-    if (imgSrc.value instanceof Array) {
+    if (imageSrc.value instanceof Array) {
       imageListElement = document.createElement('div');
-      imgSrc.value.forEach((src) => {
+      imageSrc.value.forEach((src) => {
         const img = new Image();
         img.src = src;
         imageListElement?.appendChild(img);
@@ -50,12 +51,12 @@ export function useImageViewer(imgSrc: Ref<string> | Ref<string[]>, options: Vie
     }
     else {
       imageElement = new Image();
-      imageElement.src = imgSrc.value;
+      imageElement.src = imageSrc.value;
     }
   }
 
   function getElement() {
-    return (imgSrc.value instanceof Array ? imageListElement : imageElement) as HTMLElement;
+    return (imageSrc.value instanceof Array ? imageListElement : imageElement) as HTMLElement;
   }
 
   async function update() {
@@ -66,7 +67,7 @@ export function useImageViewer(imgSrc: Ref<string> | Ref<string[]>, options: Vie
       viewer = null;
     }
 
-    if (imgSrc.value) {
+    if (imageSrc.value) {
       updateELement();
       if (!viewer)
         viewer = new Viewer(getElement(), getOptions());
@@ -86,7 +87,7 @@ export function useImageViewer(imgSrc: Ref<string> | Ref<string[]>, options: Vie
   }
   onBeforeUnmount(destroy);
 
-  watch(imgSrc, update, { immediate: true, deep: true });
+  watch(imageSrc, update, { immediate: true, deep: true });
 
   return {
     viewer,
