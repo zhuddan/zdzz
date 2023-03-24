@@ -48,7 +48,6 @@ async function render() {
       }
     })
     .catch((e) => {
-      console.log(e);
       errorMsg.value = e.message.replace('Missing PDF', '找不到PDF');
       isError.value = true;
       numPages.value = 0;
