@@ -2,7 +2,6 @@ import 'viewerjs/dist/viewer.css';
 import Viewer from 'viewerjs';
 import { computed, nextTick, onBeforeUnmount, watch } from 'vue';
 import { useComputedRef } from '../useComputedRef';
-
 export function useImageViewer(arrayableImage: MaybeComputedRef<string | string[]>, options: Viewer.Options = {}) {
   let viewer: Nullable<Viewer> = null;
   let imageElement: Nullable<HTMLImageElement> = null;
