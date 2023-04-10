@@ -1,6 +1,6 @@
 export { useBaseUrl } from './useBaseUrl';
 export { useComputedRef } from './useComputedRef';
-export { useContext } from './useContext';
+export { createContext, useContext } from './useContext';
 export { useEventListener } from './useEventListener';
 export { useImageViewer } from './useImageViewer';
 export { useRouteParams } from './useRouteParams';
