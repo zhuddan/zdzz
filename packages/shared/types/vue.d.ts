@@ -14,11 +14,17 @@ declare global{
 
   declare type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>;
 
-  declare type MaybeRecordRef<T> = {
-    [P in keyof T]: MaybeRef<T[P]>;
+  declare type MaybeRecordRef<T extends Recordable> = {
+    [P in keyof T]: T[P] extends Recordable ? MaybeRecordRef<T[P]>
+      : MaybeRef<T[P]>;
   };
 
-  declare type RecordRef<T> = {
-    [P in keyof T]: Ref<T[P]>;
+  declare type ToRawByRecordRef<T extends Recordable> = {
+    [P in keyof T]: T[P] extends Ref<infer U>
+      ? U
+      : T[P] extends Recordable
+        ? ToRawByRecordRef<T[P]>
+        : T[P]
   };
+
 }

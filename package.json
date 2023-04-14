@@ -17,7 +17,7 @@
     "version:patch": "pnpm --filter=@zdzz/* run version:patch",
     "version:patch:shared": "pnpm changeset version --include=@zdzz/shared",
     "version:patch:hooks": "pnpm changeset version --include=@zdzz/hooks --tag patch",
-    "clear": "pnpm run clear:packages && pnpm run clear:examples",
+    "clear": "rm -rf ./node_modules ./**/**/node_modules",
     "clear:packages": "pnpm --filter=@zdzz/* run clear",
     "clear:examples": "pnpm --filter ./examples run clear",
     "changeset": "changeset",

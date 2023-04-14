@@ -21,6 +21,11 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
+    exclude: [
+      '@zdzz/shared',
+      '@zdzz/hooks',
+      '@zdzz/components',
+    ],
     // @iconify/iconify: The dependency is dynamically and virtually loaded by @purge-icons/generated, so it needs to be specified explicitly
     // include: ['@iconify/iconify', '@purge-icons/generated'],
   },

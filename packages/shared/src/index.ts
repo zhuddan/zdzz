@@ -8,6 +8,7 @@ export * from './download';
 export * from './formatDirection';
 export * from './formatSize';
 export * from './getParams';
+export * from './getRawRecordRef';
 export * from './http';
 export * from './is';
 export * from './json';

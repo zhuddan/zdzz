@@ -159,9 +159,6 @@ export function useDicts<DT extends DictTypes = DictTypes>(
     ...toRefs(unref(dict.loading)),
   };
 
-  type UseRuoyiDictsReturn = RecordRef<DictDataListRecord<DT>> &
-    RecordRef<DictDataLoadingRecord<DT>> &
-    BaseDicts<DT, typeof format, typeof load>;
-  return useRuoyiDictsReturn as unknown as UseRuoyiDictsReturn;
-}
+ 
+  return useRuoyiDictsReturn;
 ```

@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import { getRawRecordRef } from '@zdzz/shared';
+import { ref } from 'vue';
 
+const s = {
+  name: ref<'string' | 'a'>('a'),
+  o: {
+    a: ref(['KJK']),
+  },
+};
+
+const ss = getRawRecordRef(s);
 </script>
 
 <template>
