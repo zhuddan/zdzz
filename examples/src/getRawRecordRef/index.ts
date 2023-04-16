@@ -1,6 +1,8 @@
-import { isObject } from '../is';
+import { isObject } from '@zdzz/shared';
+// import type { Ref } from 'vue';
 import { isRef, toRaw, unref } from 'vue';
 
+// export function getRawRecordRef<T extends Ref<T>>(maybeRecordRef: MaybeRecordRef<T>): ToRawByRecordRef<T>;
 export function getRawRecordRef<T extends Recordable>(maybeRecordRef: MaybeRecordRef<T>): ToRawByRecordRef<T> {
   const res = {} as ToRawByRecordRef<T>;
   const keys = Object.keys(maybeRecordRef);
