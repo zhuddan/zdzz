@@ -16,6 +16,7 @@
   "scripts": {
     "build": "pnpm run clear && vite build",
     "version:patch": "pnpm changeset version ",
+    "w": "vite build -w",
     "clear": "rm -rf dist es lib "
   },
   "keywords": [],

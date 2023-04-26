@@ -32,6 +32,7 @@
     "build": "pnpm run clear && vite build",
     "version:patch": "pnpm version patch",
     "clear": "rm -rf dist es lib",
+    "w": "vite build -w",
     "check:type": "tsc --noEmit"
   },
   "keywords": [],

@@ -19,6 +19,7 @@
     "build:scss": "esno script/buildScss",
     "version:patch": "pnpm version patch",
     "clear": "rm -rf dist es lib",
+    "w": "vite build -w",
     "check:type": "vue-tsc --noEmit"
   },
   "keywords": [],
