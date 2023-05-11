@@ -17,4 +17,4 @@ declare type ResponseListParams<T = Recordable> = {
   pageSize: number;
 } & T;
 
-declare type ListQuery<T = Recordable> = Partial<ResponseListParams & T>;
+declare type ListQuery<T = Recordable> = Partial<ResponseListParams<T>>;
