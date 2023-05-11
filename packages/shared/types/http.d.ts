@@ -12,9 +12,9 @@ declare type ResponseData<T = any> = ResponseResult<{
   data: T;
 }>;
 
-declare type ResponseListParams<T = object> = {
+declare type ResponseListParams<T = Recordable> = {
   pageNum: number;
   pageSize: number;
-} & Partial<T>;
+} & T;
 
 declare type ListQuery<T = Recordable> = Partial<ResponseListParams & T>;
