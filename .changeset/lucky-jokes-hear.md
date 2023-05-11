@@ -1,0 +1,5 @@
+---
+"@zdzz/shared": major
+---
+
+fix
