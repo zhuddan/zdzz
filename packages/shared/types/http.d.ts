@@ -12,9 +12,17 @@ declare type ResponseData<T = any> = ResponseResult<{
   data: T;
 }>;
 
-declare type ResponseListParams<T = Recordable> = {
+declare interface ResponseListParams {
   pageNum: number;
   pageSize: number;
-} & T;
+}
 
-declare type ListQuery<T = Recordable> = Partial<ResponseListParams<T>>;
+declare type ResponseListParamsWrapper<T extends Recordable = Recordable> = ResponseListParams & Partial<T>;
+
+declare type ResponseListParamsWrapperPartial<T extends Recordable = Recordable> = Partial<ResponseListParams & T>;
+
+declare type ListQuery<T extends Recordable = Recordable> = ResponseListParams
+| ResponseListParamsWrapper<T>
+| ResponseListParamsWrapper<T>
+| Partial<T>;
+
