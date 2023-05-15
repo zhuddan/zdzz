@@ -4,6 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
+    "clear": "rm -rf ./node_modules ./**/**/node_modules ./**/**/dist ./**/**/es ./**/**/lib",
+
     "build:scss": "pnpm --filter=@zdzz/components run build:scss",
     "reload": "pnpm run build:components && pnpm run dev",
     "dev": "pnpm --filter ./examples run dev",
@@ -17,7 +19,6 @@
     "version:patch": "pnpm --filter=@zdzz/* run version:patch",
     "version:patch:shared": "pnpm changeset version --include=@zdzz/shared",
     "version:patch:hooks": "pnpm changeset version --include=@zdzz/hooks --tag patch",
-    "clear": "rm -rf ./node_modules ./**/**/node_modules",
     "clear:packages": "pnpm --filter=@zdzz/* run clear",
     "clear:examples": "pnpm --filter ./examples run clear",
     "changeset": "changeset",
