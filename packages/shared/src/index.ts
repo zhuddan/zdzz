@@ -13,7 +13,6 @@ export * from './http';
 export * from './is';
 export * from './json';
 export * from './listToTree';
-export * from './merge';
 export * from './setParams';
 export * from './sleep';
 export * from './validate';

@@ -1,4 +1,4 @@
-import { merge } from '../merge';
+import { merge } from 'lodash-es';
 
 import type { DictBaseOptions, OriginDictData } from './typings';
 import { defaultRuoyiDictsOptions } from './config';

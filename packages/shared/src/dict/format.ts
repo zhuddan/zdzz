@@ -1,5 +1,5 @@
 export type formatData = Record<string, any>;
-import { merge } from '../merge';
+import { merge } from 'lodash-es';
 
 import { defaultFormatDictOptions } from './config';
 import { Dict } from './Dict';
