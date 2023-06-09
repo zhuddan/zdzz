@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 import type { ErrorMessageMode, RequestOptions, Result } from '../types';
+import type { Fn, Nullable } from '../../types';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
   authenticationScheme?: string;

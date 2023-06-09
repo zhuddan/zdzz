@@ -1,7 +1,6 @@
 import type { PluginOption, UserConfig } from 'vite';
 import type { OutputOptions } from 'rollup';
 import vuePlugin from '@vitejs/plugin-vue';
-import DefineOptions from 'unplugin-vue-define-options/vite';
 import { createDtsPlugin } from './types';
 import { distOutput, preserveModulesOutput } from './output';
 import { EXTERNAL } from './const';
@@ -26,7 +25,6 @@ export function createPlugins(options: CreatePluginsOptions = {}): PluginOption[
   if (opt?.vue) {
     plugins.push(
       vuePlugin(),
-      DefineOptions(),
     );
   }
   if (opt?.dts) {

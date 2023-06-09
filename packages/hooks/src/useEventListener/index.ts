@@ -1,3 +1,4 @@
+import type { ElRef, Fn } from '@zdzz/shared';
 import { onMounted, onUnmounted, unref } from 'vue';
 
 type WindowType = Window & typeof globalThis;

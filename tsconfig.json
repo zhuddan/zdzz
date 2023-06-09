@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
     "baseUrl": ".",
     "target": "es2015",
     "module": "esnext",
@@ -11,7 +12,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "suppressImplicitAnyIndexErrors":true,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
@@ -20,7 +20,12 @@
       "dom"
     ],
     "skipLibCheck": true,
-    "rootDir": ".",
-    "types": ["node","vite/client"]
-  }
+    "types": [
+      "node",
+      "vite/client"
+    ]
+  },
+  "include": [
+    "packages/**/src/*"
+  ]
 }

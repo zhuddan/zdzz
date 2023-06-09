@@ -7,6 +7,6 @@ const { createErrorMsg } = useMessage();
 const transform = createRuoyiAxiosTransform({
   removeToken,
   getToken,
-  createMessage: (a, b) => createErrorMsg(b),
+  onError: (a, b) => createErrorMsg(b),
 });
 export const defHttp = createAxios(apiUrl, { transform });

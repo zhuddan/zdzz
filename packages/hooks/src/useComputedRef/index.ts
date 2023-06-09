@@ -1,3 +1,4 @@
+import type { MaybeComputedRef } from '@zdzz/shared';
 import { isFunction } from '@zdzz/shared';
 import { computed, unref } from 'vue';
 import type { ComputedRef } from 'vue';

@@ -1,6 +1,6 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import { cloneDeep } from '../../cloneDeep';
+import { cloneDeep } from 'lodash-es';
 
 import qs from 'qs';
 import { ContentTypeEnum, RequestEnum } from '../types/enum';
@@ -13,6 +13,7 @@ import type { CreateAxiosOptions } from './axiosTransform';
  * @description:  axios module
  */
 export class VAxios {
+  axiosCanceler = new AxiosCanceler();
   private axiosInstance: AxiosInstance;
   private readonly options: CreateAxiosOptions;
 
@@ -69,8 +70,6 @@ export class VAxios {
     const { requestInterceptors, requestInterceptorsCatch, responseInterceptors, responseInterceptorsCatch }
       = transform;
 
-    const axiosCanceler = new AxiosCanceler();
-
     // Request interceptor configuration processing
     this.axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
       // If cancel repeat request is turned on, then cancel repeat request is prohibited
@@ -79,7 +78,7 @@ export class VAxios {
       const ignoreCancel
         = ignoreCancelToken !== undefined ? ignoreCancelToken : this.options.requestOptions?.ignoreCancelToken;
 
-      !ignoreCancel && axiosCanceler.addPending(config);
+      !ignoreCancel && this.axiosCanceler.addPending(config);
       if (requestInterceptors && isFunction(requestInterceptors))
         config = requestInterceptors(config, this.options);
 
@@ -93,7 +92,7 @@ export class VAxios {
 
     // Response result interceptor processing
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
-      res && axiosCanceler.removePending(res.config);
+      res && this.axiosCanceler.removePending(res.config);
       if (responseInterceptors && isFunction(responseInterceptors))
         res = responseInterceptors(res);
 

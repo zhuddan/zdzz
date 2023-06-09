@@ -1,6 +1,8 @@
 import { WebCache } from '@zdzz/shared';
 import { name, version } from '../../package.json';
-type WebCacheEnum = 'Token';
+interface WebCacheEnum {
+  Token: string;
+}
 const webCache = new WebCache<WebCacheEnum>({
   projectName: name,
   projectVersion: version,
@@ -11,7 +13,7 @@ export function setToken(token: string) {
 }
 
 export function getToken() {
-  return webCache.get<string>('Token');
+  return webCache.get('Token');
 }
 
 export function removeToken() {

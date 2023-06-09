@@ -1,6 +1,6 @@
 {
   "name": "@zdzz/shared",
-  "version": "0.0.37",
+  "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -11,9 +11,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs"
-    },
-    "./global": {
-      "types": "./global.d.ts"
     }
   },
   "files": [

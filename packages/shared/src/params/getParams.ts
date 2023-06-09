@@ -3,7 +3,7 @@ export function getParams(url?: string) {
   const [, search] = _url.split('?');
   if (search && search.length) {
     const paramsList = search.split('&');
-    const params = {};
+    const params = {} as Record<string, any>;
     paramsList.forEach((e) => {
       const [key, value] = e.split('=');
       if (value != undefined && value != '')

@@ -3,12 +3,11 @@ import axios from 'axios';
 
 import { isFunction } from '../../is';
 
-// Used to store the identification and cancellation function of each request
-let pendingMap = new Map<string, Canceler>();
-
 export const getPendingUrl = (config: AxiosRequestConfig) => [config.method, config.url].join('&');
 
 export class AxiosCanceler {
+  pendingMap = new Map<string, Canceler>();
+  constructor() {}
   /**
    * Add request
    * @param {Object} config
@@ -19,9 +18,9 @@ export class AxiosCanceler {
     config.cancelToken
       = config.cancelToken
       || new axios.CancelToken((cancel) => {
-        if (!pendingMap.has(url)) {
+        if (!this.pendingMap.has(url)) {
           // If there is no current request in pending, add it
-          pendingMap.set(url, cancel);
+          this.pendingMap.set(url, cancel);
         }
       });
   }
@@ -30,10 +29,10 @@ export class AxiosCanceler {
    * @description: Clear all pending
    */
   removeAllPending() {
-    pendingMap.forEach((cancel) => {
+    this.pendingMap.forEach((cancel) => {
       cancel && isFunction(cancel) && cancel();
     });
-    pendingMap.clear();
+    this.pendingMap.clear();
   }
 
   /**
@@ -43,12 +42,12 @@ export class AxiosCanceler {
   removePending(config: AxiosRequestConfig) {
     const url = getPendingUrl(config);
 
-    if (pendingMap.has(url)) {
+    if (this.pendingMap.has(url)) {
       // If there is a current request identifier in pending,
       // the current request needs to be cancelled and removed
-      const cancel = pendingMap.get(url);
+      const cancel = this.pendingMap.get(url);
       cancel && cancel(url);
-      pendingMap.delete(url);
+      this.pendingMap.delete(url);
     }
   }
 
@@ -56,6 +55,6 @@ export class AxiosCanceler {
    * @description: reset
    */
   reset(): void {
-    pendingMap = new Map<string, Canceler>();
+    this.pendingMap = new Map<string, Canceler>();
   }
 }

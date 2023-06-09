@@ -1,6 +1,6 @@
 {
   "name": "@zdzz/hooks",
-  "version": "0.0.26",
+  "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@zdzz/shared": "workspace:*",
+    "@zdzz/shared": "workspace:^",
     "viewerjs": "^1.11.3"
   },
   "peerDependencies": {

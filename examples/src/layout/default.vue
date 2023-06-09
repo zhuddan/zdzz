@@ -4,6 +4,7 @@ import AppFooter from '../components/AppFooter.vue';
 import AppMain from '../components/AppMain.vue';
 import { computed, ref } from 'vue';
 import { useWatermark } from '@zdzz/hooks/src';
+import type { Nullable } from '@zdzz/shared';
 const layoutRef = ref<Nullable<HTMLElement>>(null);
 function getWatermark() {
   const now = new Date();

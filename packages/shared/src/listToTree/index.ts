@@ -1,5 +1,7 @@
-export function listToTree<T>(
-  data: TreeItem<T>[],
+import type { AnyObject, TreeList } from '../types';
+
+export function listToTree<T extends AnyObject= AnyObject>(
+  data: TreeList<T>,
   options?: Partial<{
     id: string;
     parentId: string;
@@ -11,8 +13,8 @@ export function listToTree<T>(
   const PARENT_ID_KEY = options?.parentId || 'parentId';
   const CHILDREN_KEY = options?.children || 'children';
 
-  const childrenListMap = {};
-  const nodeIds = {};
+  const childrenListMap = {} as AnyObject;
+  const nodeIds = {} as AnyObject;
   const tree: TreeList<T> = [];
 
   for (const d of data) {
@@ -33,20 +35,20 @@ export function listToTree<T>(
   for (const t of tree)
     adaptToChildrenList(t);
 
-  function adaptToChildrenList(o: T) {
-    if (childrenListMap[o[ID_KEY]]) {
-      const key = CHILDREN_KEY;
-      o[key] = childrenListMap[o[ID_KEY]];
+  function adaptToChildrenList(item: T) {
+    if (childrenListMap[item[ID_KEY]]) {
+      const key = CHILDREN_KEY as keyof T;
+      item[key] = childrenListMap[item[ID_KEY]];
     }
-    if (o[CHILDREN_KEY]) {
-      for (const c of o[CHILDREN_KEY])
+    if (item[CHILDREN_KEY]) {
+      for (const c of item[CHILDREN_KEY])
         adaptToChildrenList(c);
     }
   }
   return options?.withLevel ? setTreeLevel(tree) : tree;
 }
 
-export function setTreeLevel<T>(tree: TreeList<T>, level = 0) {
+export function setTreeLevel<T extends AnyObject= AnyObject>(tree: TreeList<T>, level = 0) {
   const result: TreeList<T> = [];
   tree.forEach((e) => {
     result.push({

@@ -10,6 +10,7 @@ export function createDtsPlugin(options?: Partial<{
   const output = options?.output || ['dist', 'es', 'lib'];
   const replacePath = options?.replacePath || false;
   return dts({
+    tsConfigFilePath: '../../tsconfig.json',
     include: ['src/**/*.ts', 'type.d.ts', 'src/**/*.vue'],
     outputDir: output,
     beforeWriteFile(filePath: string, content) {

@@ -5,7 +5,8 @@ import type { RequestOptions, Result } from '../types';
 import type { AxiosTransform, CreateAxiosTransform } from '../core/axiosTransform';
 import { checkStatus } from '../core/checkStatus';
 import { formatRequestDate, joinTimestamp } from '../core/helper';
-import { setParams } from '../../setParams';
+import { setParams } from '../../params';
+import type { AnyObject } from '../../types';
 
 export const createRuoyiAxiosTransform: CreateAxiosTransform = (
   { onError, getToken, removeToken, onSignout } = {},
@@ -114,10 +115,10 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
     requestInterceptors: (config, options) => {
       // 请求之前处理config
       const token = getToken?.();
-      if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
+      if (token && (config as AnyObject)?.requestOptions?.withToken !== false) {
         // jwt token
         const tokenKey = options.requestOptions?.tokenKey as string;
-        (config as Recordable).headers[tokenKey] = options.authenticationScheme
+        (config as AnyObject).headers[tokenKey] = options.authenticationScheme
           ? `${options.authenticationScheme} ${token}`
           : token;
       }

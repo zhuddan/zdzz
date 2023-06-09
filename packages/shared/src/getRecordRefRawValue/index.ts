@@ -1,6 +1,7 @@
 import { toRaw, unref } from 'vue';
+import type { MaybeShallowRecordRef } from '../types';
 
-export function getRecordRefRawValue<T extends Recordable>(maybeShallowRecordRef: MaybeShallowRecordRef<T>): T {
+export function getRecordRefRawValue<T extends object>(maybeShallowRecordRef: MaybeShallowRecordRef<T>): T {
   const res = {} as T;
   const keys = Object.keys(maybeShallowRecordRef);
   for (let index = 0; index < keys.length; index++) {

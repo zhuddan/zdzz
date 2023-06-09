@@ -1,11 +1,3 @@
 {
-  "include": ["src","global.d.ts"],
-  "extends":"../../tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "rootDir": "./",
-    "noEmit": true,
-    "suppressImplicitAnyIndexErrors":true,
-    "types": ["@zdzz/shared/global"]
-  }
+  "extends":"../../tsconfig.json"
 }

@@ -13,14 +13,17 @@
     "skipLibCheck": true,
     "noEmit": true,
     "types": [
-      "@zdzz/shared/global",
-      "vite/client",
-      "@zdzz/components/global",
-      "unplugin-vue-define-options/macros-global"
+      "vite/client"
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "~/*": ["./types/*"]
+      "@zdzz/shared": ["../packages/shared/src/index.ts"],
+      "@zdzz/shared/global": ["../packages/shared/global.d.ts"],
+      "@zdzz/shared/*": ["../packages/shared/*"],
+      "@zdzz/hooks": ["../packages/hooks/src/index.ts"],
+      "@zdzz/hooks/*": ["../packages/hooks/*"],
+      "@zdzz/components": ["../packages/components/src/index.ts"],
+      "@zdzz/components/*": ["../packages/components/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],

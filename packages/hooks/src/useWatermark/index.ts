@@ -1,3 +1,4 @@
+import type { MaybeComputedRef, Nullable } from '@zdzz/shared';
 import { isUnDef } from '@zdzz/shared';
 import type { CSSProperties, Ref } from 'vue';
 import { nextTick, onBeforeMount, onMounted, ref, unref, watch } from 'vue';
@@ -33,7 +34,11 @@ function useWatermarkImage(str: MaybeComputedRef<string>, options: MaybeComputed
     cans.rotate(isUnDef(_mergeOptions.rotate) ? defaultRotate : _mergeOptions.rotate);
     for (const key in _mergeOptions) {
       if (Object.prototype.hasOwnProperty.call(_mergeOptions, key)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         const element = _mergeOptions[key];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         cans[key] = element;
       }
     }
@@ -50,9 +55,7 @@ function useWatermarkImage(str: MaybeComputedRef<string>, options: MaybeComputed
 }
 
 export function useWatermark(el: Ref<Nullable<HTMLElement>>, name: MaybeComputedRef<string>, style: MaybeComputedRef<UseWatermarkImageOptionFull> = {}) {
-  const watermarkName = useComputedRef(name);
-  const options = useComputedRef(style);
-  const { base64 } = useWatermarkImage(watermarkName, options);
+  const { base64 } = useWatermarkImage(name, style);
   const div = document.createElement('div');
   const elStyle = useComputedRef<CSSProperties>(() => ({
     pointerEvents: 'none',
@@ -69,7 +72,11 @@ export function useWatermark(el: Ref<Nullable<HTMLElement>>, name: MaybeComputed
   function updateStyle() {
     for (const key in elStyle.value) {
       if (Object.prototype.hasOwnProperty.call(elStyle.value, key)) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         const styleValue = elStyle.value[key];
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         div.style[key] = styleValue;
       }
     }

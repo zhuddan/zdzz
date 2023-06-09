@@ -3,7 +3,7 @@ import { isNumber, isObject } from '../is';
 import type { WebCacheData, WebCacheTime } from './types';
 
 type ExpiresTime = number | WebCacheTime;
-export class WebCache<CacheType extends Recordable> {
+export class WebCache<CacheType extends object> {
   projectName: string;
   projectVersion: string;
   defaultExpires = 864e5 * 7;

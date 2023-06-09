@@ -1,6 +1,7 @@
 import { defHttp } from '@/utils/defHttp';
 
 import type { UserModel } from './model/userModel';
+import type { ResponseResult } from '@zdzz/shared';
 // 获取验证码
 export function getCodeImg() {
   return defHttp.get<ResponseResult<{ img: string; uuid: string }>>(

@@ -1,4 +1,6 @@
-export function stringifyJson(data: Recordable): Nullable<string> {
+import type { AnyObject, Nullable } from '../types';
+
+export function stringifyJson(data: AnyObject): Nullable<string> {
   try {
     return JSON.stringify(data);
   }
@@ -7,7 +9,7 @@ export function stringifyJson(data: Recordable): Nullable<string> {
   }
 }
 
-export function parseJson<T extends Recordable = Recordable>(jsonStr: string): Nullable<T> {
+export function parseJson<T extends AnyObject = AnyObject>(jsonStr: string): Nullable<T> {
   try {
     return JSON.parse(jsonStr);
   }

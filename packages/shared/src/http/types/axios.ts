@@ -1,3 +1,5 @@
+import type { AnyObject } from '../../types';
+
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined;
 
 export interface RequestOptions {
@@ -37,7 +39,7 @@ export interface Result<T = any> {
 // multipart/form-data: upload file
 export interface UploadFileParams {
   // Other parameters
-  data?: Recordable;
+  data?: AnyObject;
   // File parameter interface field name
   name?: string;
   // file name

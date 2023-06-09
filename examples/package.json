@@ -6,13 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "check:type": "vue-tsc --noEmit --skipLibCheck",
     "preview": "vite preview",
     "clear": "rm -rf dist node_modules"
   },
   "dependencies": {
-    "@zdzz/components": "workspace:*",
-    "@zdzz/hooks": "workspace:*",
-    "@zdzz/shared": "workspace:*",
     "notie": "^4.3.1",
     "pinia": "^2.0.32"
   },

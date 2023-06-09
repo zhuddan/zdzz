@@ -18,10 +18,6 @@ export const menus: RouteRecordRaw[] = [
     path: 'axios',
     component: () => import('../views/examples/axios/index.vue'),
   },
-  {
-    path: 'components',
-    component: () => import('../views/examples/components/index.vue'),
-  },
 ];
 const router = createRouter({
   history: createWebHistory(),

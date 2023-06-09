@@ -1,6 +1,6 @@
 export type formatData = Record<string, any>;
 import { merge } from 'lodash-es';
-
+import type { Arrayable, Nullable } from '../types';
 import { defaultFormatDictOptions } from './config';
 import { Dict } from './Dict';
 import type { FormatOptions } from './typings';
