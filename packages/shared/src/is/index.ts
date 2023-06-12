@@ -1,5 +1,5 @@
 const toString = Object.prototype.toString;
-
+import {} from '../types/common';
 export function is(val: unknown, type: string) {
   return toString.call(val) === `[object ${type}]`;
 }

@@ -194,6 +194,7 @@ export class VAxios {
     conf.requestOptions = opt;
 
     conf = this.supportFormData(conf);
+    console.log({ conf });
 
     return new Promise((resolve, reject) => {
       this.axiosInstance

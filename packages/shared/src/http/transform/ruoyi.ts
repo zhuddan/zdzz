@@ -113,6 +113,7 @@ export const createRuoyiAxiosTransform: CreateAxiosTransform = (
      * @description: 请求拦截器处理
      */
     requestInterceptors: (config, options) => {
+      console.log('requestInterceptors', { config, options });
       // 请求之前处理config
       const token = getToken?.();
       if (token && (config as AnyObject)?.requestOptions?.withToken !== false) {
